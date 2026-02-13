@@ -3,11 +3,7 @@
     <div class="login-card">
       <div class="login-branding">
         <div class="login-logo">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-            <rect width="28" height="28" rx="4" fill="#0078D4"/>
-            <path d="M7 7h6v6H7V7zm8 0h6v6h-6V7zm-8 8h6v6H7v-6zm8 0h6v6h-6v-6z" fill="white" opacity="0.9"/>
-          </svg>
-          <span class="login-logo-text">Virtuoso D365 CRM</span>
+          <img src="/logo.svg" alt="Virtuoso" class="login-logo-img" />
         </div>
         <h1 class="login-title">Sign in</h1>
         <p class="login-subtitle">Use your organizational account</p>
@@ -122,16 +118,12 @@ export default {
 }
 
 .login-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
   margin-bottom: 24px;
 }
 
-.login-logo-text {
-  font-size: 16px;
-  font-weight: 600;
-  color: #323130;
+.login-logo-img {
+  height: 32px;
+  width: auto;
 }
 
 .login-title {
