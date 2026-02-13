@@ -1,0 +1,1056 @@
+/* D365 Business Central Custom Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #F3F2F1;
+  color: #323130;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F3F2F1;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8C6C4;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A19F9D;
+}
+
+/* D365 Command Bar button styles */
+.d365-cmd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #323130;
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  white-space: nowrap;
+}
+.d365-cmd-btn:hover {
+  background-color: #F3F2F1;
+}
+.d365-cmd-btn:active {
+  background-color: #EDEBE9;
+}
+.d365-cmd-btn:disabled {
+  color: #A19F9D;
+  cursor: not-allowed;
+}
+.d365-cmd-btn:disabled:hover {
+  background: transparent;
+}
+.d365-cmd-btn.primary {
+  color: #0078D4;
+  font-weight: 600;
+}
+
+/* D365 Form field styles */
+.d365-field-group {
+  margin-bottom: 12px;
+}
+.d365-field-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #323130;
+  margin-bottom: 4px;
+}
+.d365-field-input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #323130;
+  background: #FFFFFF;
+  border: 1px solid #8A8886;
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.1s ease;
+}
+.d365-field-input:hover {
+  border-color: #323130;
+}
+.d365-field-input:focus {
+  border-color: #0078D4;
+  border-bottom-width: 2px;
+}
+.d365-field-input:disabled {
+  background: #F3F2F1;
+  border-color: #C8C6C4;
+  color: #A19F9D;
+}
+
+select.d365-field-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23605E5C' d='M2.5 4.5l3.5 3.5 3.5-3.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 28px;
+}
+
+/* D365 Tab styles */
+.d365-tabs {
+  display: flex;
+  border-bottom: 1px solid #EDEBE9;
+  margin-bottom: 16px;
+}
+.d365-tab {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #605E5C;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+.d365-tab:hover {
+  color: #323130;
+  background: #F3F2F1;
+}
+.d365-tab.active {
+  color: #0078D4;
+  border-bottom-color: #0078D4;
+  font-weight: 600;
+}
+
+/* D365 Card styles */
+.d365-card {
+  background: #FFFFFF;
+  border: 1px solid #EDEBE9;
+  border-radius: 2px;
+  box-shadow: 0 1.6px 3.6px rgba(0,0,0,0.132), 0 0.3px 0.9px rgba(0,0,0,0.108);
+}
+
+/* D365 Grid row styles */
+.d365-grid-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #EDEBE9;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+.d365-grid-row:hover {
+  background-color: #F3F2F1;
+}
+.d365-grid-row.selected {
+  background-color: #DEECF9;
+}
+
+/* Status badge colors */
+.badge-open { background-color: #DEECF9; color: #0078D4; }
+.badge-won { background-color: #DFF6DD; color: #107C10; }
+.badge-lost { background-color: #FDE7E9; color: #D13438; }
+.badge-draft { background-color: #F3F2F1; color: #605E5C; }
+.badge-sent { background-color: #FFF4CE; color: #797673; }
+.badge-accepted { background-color: #DFF6DD; color: #107C10; }
+.badge-completed { background-color: #DFF6DD; color: #107C10; }
+.badge-cancelled { background-color: #F3F2F1; color: #A19F9D; }
+.badge-overdue { background-color: #FDE7E9; color: #D13438; }
+
+/* Transition classes */
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.slide-enter, .slide-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+/* Pipeline stage colors */
+.stage-qualification { border-left-color: #0078D4; }
+.stage-development { border-left-color: #8764B8; }
+.stage-proposal { border-left-color: #FFB900; }
+.stage-negotiation { border-left-color: #FF8C00; }
+.stage-closed-won { border-left-color: #107C10; }
+.stage-closed-lost { border-left-color: #D13438; }
+
+/* =====================================================
+   D365 FactBox Panel Styles
+   ===================================================== */
+.factbox-panel {
+  width: 320px;
+  background: #FFFFFF;
+  border-left: 1px solid #EDEBE9;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.factbox-section {
+  border-bottom: 1px solid #EDEBE9;
+  padding: 0;
+}
+
+.factbox-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #323130;
+  background: #FAFAFA;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.1s;
+}
+.factbox-section-header:hover {
+  background: #F3F2F1;
+}
+
+.factbox-section-header .factbox-chevron {
+  transition: transform 0.15s ease;
+}
+.factbox-section-header.collapsed .factbox-chevron {
+  transform: rotate(-90deg);
+}
+
+.factbox-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 16px;
+  font-size: 13px;
+  color: #323130;
+}
+.factbox-item:last-child {
+  padding-bottom: 12px;
+}
+
+.factbox-item-label {
+  color: #605E5C;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.factbox-item-value {
+  text-align: right;
+  font-weight: 600;
+  color: #323130;
+  word-break: break-word;
+}
+
+.factbox-item-value a {
+  color: #0078D4;
+  text-decoration: none;
+}
+.factbox-item-value a:hover {
+  text-decoration: underline;
+}
+
+/* =====================================================
+   D365 Timeline Styles
+   ===================================================== */
+.timeline-container {
+  position: relative;
+  padding: 16px 0;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #EDEBE9;
+}
+
+.timeline-entry {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  padding: 0 16px 16px;
+}
+
+.timeline-dot {
+  position: relative;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid #0078D4;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.timeline-dot--completed {
+  background: #107C10;
+  border-color: #107C10;
+}
+.timeline-dot--call {
+  border-color: #107C10;
+}
+.timeline-dot--email {
+  border-color: #0078D4;
+}
+.timeline-dot--meeting {
+  border-color: #8764B8;
+}
+.timeline-dot--task {
+  border-color: #605E5C;
+}
+
+.timeline-card {
+  flex: 1;
+  background: #FFFFFF;
+  border: 1px solid #EDEBE9;
+  border-radius: 2px;
+  padding: 10px 14px;
+  transition: box-shadow 0.1s;
+}
+.timeline-card:hover {
+  box-shadow: 0 1.6px 3.6px rgba(0, 0, 0, 0.132);
+}
+
+.timeline-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.timeline-card-type {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+.timeline-card-type--call { background: #DFF6DD; color: #107C10; }
+.timeline-card-type--email { background: #DEECF9; color: #0078D4; }
+.timeline-card-type--meeting { background: #E8DEF8; color: #8764B8; }
+.timeline-card-type--task { background: #F3F2F1; color: #605E5C; }
+
+.timeline-card-subject {
+  font-size: 13px;
+  font-weight: 600;
+  color: #323130;
+}
+
+.timeline-card-description {
+  font-size: 12px;
+  color: #605E5C;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.timeline-card-meta {
+  font-size: 11px;
+  color: #A19F9D;
+  margin-top: 6px;
+}
+
+.timeline-date-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: #605E5C;
+  padding: 8px 16px 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.timeline-filter-pills {
+  display: flex;
+  gap: 6px;
+  padding: 8px 16px;
+  flex-wrap: wrap;
+}
+
+.timeline-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #F3F2F1;
+  border: 1px solid #EDEBE9;
+  border-radius: 16px;
+  color: #605E5C;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.timeline-filter-pill:hover {
+  background: #EDEBE9;
+}
+.timeline-filter-pill.active {
+  background: #DEECF9;
+  border-color: #0078D4;
+  color: #0078D4;
+}
+
+/* =====================================================
+   D365 Business Process Flow Styles
+   ===================================================== */
+.bpf-container {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-bottom: 1px solid #EDEBE9;
+  padding: 12px 16px;
+  overflow-x: auto;
+  gap: 0;
+}
+
+.bpf-stage {
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #605E5C;
+  background: #F3F2F1;
+  border: 1px solid #EDEBE9;
+  position: relative;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.bpf-stage:first-child {
+  border-radius: 2px 0 0 2px;
+}
+.bpf-stage:last-child {
+  border-radius: 0 2px 2px 0;
+}
+
+.bpf-stage--completed {
+  background: #DFF6DD;
+  border-color: #107C10;
+  color: #107C10;
+  font-weight: 600;
+}
+.bpf-stage--completed .bpf-stage-icon {
+  color: #107C10;
+}
+
+.bpf-stage--active {
+  background: #DEECF9;
+  border-color: #0078D4;
+  color: #0078D4;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px #0078D4;
+  z-index: 1;
+}
+
+.bpf-stage--future {
+  background: #F3F2F1;
+  color: #A19F9D;
+}
+
+.bpf-chevron {
+  width: 0;
+  height: 0;
+  border-top: 16px solid transparent;
+  border-bottom: 16px solid transparent;
+  border-left: 10px solid #EDEBE9;
+  margin: 0 -1px;
+  flex-shrink: 0;
+}
+.bpf-chevron--completed {
+  border-left-color: #107C10;
+}
+.bpf-chevron--active {
+  border-left-color: #0078D4;
+}
+
+.bpf-stage-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 8px;
+  background: #EDEBE9;
+  color: #605E5C;
+}
+.bpf-stage--completed .bpf-stage-number {
+  background: #107C10;
+  color: #FFFFFF;
+}
+.bpf-stage--active .bpf-stage-number {
+  background: #0078D4;
+  color: #FFFFFF;
+}
+
+/* =====================================================
+   D365 Filter Builder Styles
+   ===================================================== */
+.filter-builder {
+  padding: 16px;
+  background: #FFFFFF;
+  border: 1px solid #EDEBE9;
+  border-radius: 2px;
+}
+
+.filter-builder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.filter-builder-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #323130;
+}
+
+.filter-condition-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  background: #FAFAFA;
+  border-radius: 2px;
+}
+
+.filter-condition-row select,
+.filter-condition-row input {
+  padding: 5px 8px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid #C8C6C4;
+  border-radius: 2px;
+  outline: none;
+  background: #FFFFFF;
+  color: #323130;
+}
+.filter-condition-row select:focus,
+.filter-condition-row input:focus {
+  border-color: #0078D4;
+}
+
+.filter-condition-row .filter-remove-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  color: #A19F9D;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.filter-condition-row .filter-remove-btn:hover {
+  background: #FDE7E9;
+  color: #D13438;
+}
+
+.filter-conjunction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #605E5C;
+  background: #F3F2F1;
+  border-radius: 10px;
+  margin: 4px 0 4px 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.filter-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: #0078D4;
+  background: transparent;
+  border: 1px dashed #C8C6C4;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: all 0.1s;
+}
+.filter-add-btn:hover {
+  background: #DEECF9;
+  border-color: #0078D4;
+}
+
+.filter-apply-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: #0078D4;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background 0.1s;
+}
+.filter-apply-btn:hover {
+  background: #106EBE;
+}
+
+/* =====================================================
+   D365 Record Navigation Styles
+   ===================================================== */
+.record-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+}
+
+.record-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 1px solid #C8C6C4;
+  border-radius: 2px;
+  color: #323130;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.record-nav-btn:hover:not(:disabled) {
+  background: #F3F2F1;
+  border-color: #8A8886;
+}
+.record-nav-btn:disabled {
+  color: #C8C6C4;
+  cursor: not-allowed;
+  border-color: #EDEBE9;
+}
+
+.record-nav-counter {
+  font-size: 13px;
+  color: #605E5C;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   D365 Keyboard Shortcuts Modal Styles
+   ===================================================== */
+.shortcuts-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shortcuts-modal {
+  background: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+  width: 560px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.shortcut-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  background: #F3F2F1;
+  border: 1px solid #C8C6C4;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #323130;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  box-shadow: 0 1px 0 #C8C6C4;
+}
+
+/* =====================================================
+   Smart Dropdown & Menu Styles
+   ===================================================== */
+.smart-dropdown {
+  position: absolute;
+  background: #FFFFFF;
+  border: 1px solid #EDEBE9;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  min-width: 200px;
+  z-index: 9999;
+  padding: 4px 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.smart-dropdown--above {
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.smart-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: #323130;
+  cursor: pointer;
+  transition: background 0.1s;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+.smart-dropdown-item:hover {
+  background: #F3F2F1;
+}
+.smart-dropdown-item:active {
+  background: #EDEBE9;
+}
+.smart-dropdown-item--disabled {
+  color: #A19F9D;
+  cursor: not-allowed;
+}
+.smart-dropdown-item--disabled:hover {
+  background: transparent;
+}
+.smart-dropdown-item--active {
+  background: #DEECF9;
+  color: #0078D4;
+}
+
+.smart-dropdown-group {
+  padding: 8px 16px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #605E5C;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.smart-dropdown-separator {
+  height: 1px;
+  background: #EDEBE9;
+  margin: 4px 0;
+}
+
+.command-menu {
+  padding: 4px 0;
+}
+.command-menu-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 36px;
+  padding: 0 12px 0 36px;
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-family: inherit;
+  color: #323130;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+.command-menu-item:hover {
+  background: #F3F2F1;
+}
+
+.command-menu-item-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.command-menu-item-shortcut {
+  margin-left: auto;
+  font-size: 11px;
+  color: #A19F9D;
+}
+
+/* =====================================================
+   Enhanced DataGrid Styles
+   ===================================================== */
+.datagrid-inline-edit {
+  display: flex;
+  align-items: center;
+}
+
+.datagrid-inline-edit input {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid #0078D4;
+  border-radius: 2px;
+  outline: none;
+  background: #FFFFFF;
+  color: #323130;
+}
+.datagrid-inline-edit input:focus {
+  box-shadow: 0 0 0 1px #0078D4;
+}
+
+.datagrid-column-chooser {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #FFFFFF;
+  border: 1px solid #EDEBE9;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  width: 240px;
+  z-index: 999;
+  padding: 8px 0;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.datagrid-column-chooser-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  font-size: 13px;
+  color: #323130;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.datagrid-column-chooser-item:hover {
+  background: #F3F2F1;
+}
+
+.datagrid-column-chooser-item input[type="checkbox"] {
+  accent-color: #0078D4;
+}
+
+.datagrid-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  color: #323130;
+  background: transparent;
+  border: 1px solid #C8C6C4;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.datagrid-export-btn:hover {
+  background: #F3F2F1;
+  border-color: #8A8886;
+}
+
+.datagrid-resize-handle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: col-resize;
+  background: transparent;
+  z-index: 10;
+}
+.datagrid-resize-handle:hover,
+.datagrid-resize-handle.active {
+  background: #0078D4;
+}
+
+/* =====================================================
+   Loading & Empty States
+   ===================================================== */
+.skeleton-loader {
+  position: relative;
+  overflow: hidden;
+  background: #F3F2F1;
+  border-radius: 2px;
+}
+.skeleton-loader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+@keyframes skeleton-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.skeleton-text {
+  height: 14px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+}
+.skeleton-text--short {
+  width: 40%;
+}
+.skeleton-text--medium {
+  width: 70%;
+}
+.skeleton-text--long {
+  width: 90%;
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+}
+
+.skeleton-rect {
+  border-radius: 2px;
+}
+
+.empty-state-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: #0078D4;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background 0.1s;
+}
+.empty-state-action:hover {
+  background: #106EBE;
+}
+.empty-state-action--secondary {
+  background: transparent;
+  color: #0078D4;
+  border: 1px solid #0078D4;
+}
+.empty-state-action--secondary:hover {
+  background: #DEECF9;
+}
+
+/* =====================================================
+   D365 Tooltip Styles
+   ===================================================== */
+.d365-tooltip {
+  position: absolute;
+  z-index: 99999;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #FFFFFF;
+  background: #323130;
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.15s;
+}
+.d365-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.d365-tooltip--above {
+  transform: translateY(-4px);
+}
+.d365-tooltip--above.visible {
+  transform: translateY(0);
+}
+
+.d365-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -4px;
+  border: 4px solid transparent;
+  border-top-color: #323130;
+}
+.d365-tooltip--above::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: #323130;
+}
+
+/* =====================================================
+   App Loading Spinner (for index.html)
+   ===================================================== */
+.d365-app-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #F3F2F1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.d365-app-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #EDEBE9;
+  border-top-color: #0078D4;
+  border-radius: 50%;
+  animation: d365-spin 0.8s linear infinite;
+}
+
+.d365-app-loading-text {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #605E5C;
+}
+
+@keyframes d365-spin {
+  to { transform: rotate(360deg); }
+}
