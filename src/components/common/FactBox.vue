@@ -142,7 +142,7 @@ export default {
         var self = this
         sections.forEach(function (section) {
           if (section.collapsed && !(section.id in self.collapsedSections)) {
-            self.$set(self.collapsedSections, section.id, true)
+            self.collapsedSections[section.id] = true
           }
         })
       }
@@ -157,7 +157,7 @@ export default {
 
     toggleSection: function (sectionId) {
       var current = this.collapsedSections[sectionId] || false
-      this.$set(this.collapsedSections, sectionId, !current)
+      this.collapsedSections[sectionId] = !current
       this.$emit('section-toggle', sectionId, !current)
     },
 
@@ -440,7 +440,7 @@ export default {
   transition: max-height 0.15s ease, opacity 0.15s ease;
   overflow: hidden;
 }
-.factbox-section-transition-enter,
+.factbox-section-transition-enter-from,
 .factbox-section-transition-leave-to {
   max-height: 0;
   opacity: 0;

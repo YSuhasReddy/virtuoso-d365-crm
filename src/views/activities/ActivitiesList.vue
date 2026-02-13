@@ -99,13 +99,13 @@
             v-if="row.contactId"
             :to="'/contacts/' + row.contactId"
             class="cell-link"
-            @click.native.stop
+            @click.stop
           >{{ row.contactName || row.contactId }}</router-link>
           <span v-else class="text-muted">--</span>
         </template>
         <template #cell-dueDate="{ row }">
           <span :class="{ 'overdue-text': isOverdue(row) }">
-            {{ row.dueDate | date }}
+            {{ $filters.date(row.dueDate) }}
           </span>
         </template>
         <template #cell-priority="{ value }">
@@ -150,6 +150,7 @@ import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 import FilterBuilder from '@/components/common/FilterBuilder.vue'
 import BulkEditPanel from '@/components/common/BulkEditPanel.vue'
 import salespersons from '@/data/salespersons'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'ActivitiesList',
@@ -369,12 +370,12 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on('shortcut-refresh', this.handleRefresh)
-    this.$root.$on('shortcut-new', this.handleNew)
+    eventBus.on('shortcut-refresh', this.handleRefresh)
+    eventBus.on('shortcut-new', this.handleNew)
   },
-  beforeDestroy() {
-    this.$root.$off('shortcut-refresh', this.handleRefresh)
-    this.$root.$off('shortcut-new', this.handleNew)
+  beforeUnmount() {
+    eventBus.off('shortcut-refresh', this.handleRefresh)
+    eventBus.off('shortcut-new', this.handleNew)
   },
   created() {
     // Enrich paginated activities with resolved names
@@ -385,10 +386,10 @@ export default {
         // Enrich data with contact and salesperson names for display
         activities.forEach(a => {
           if (!a.contactName && a.contactId) {
-            this.$set(a, 'contactName', this.getContactName(a.contactId))
+            a.contactName = this.getContactName(a.contactId)
           }
           if (!a.salespersonName) {
-            this.$set(a, 'salespersonName', this.getSalespersonName(a.salesperson))
+            a.salespersonName = this.getSalespersonName(a.salesperson)
           }
         })
       },
@@ -499,7 +500,7 @@ export default {
 .slide-enter-active, .slide-leave-active {
   transition: all 0.2s ease;
 }
-.slide-enter, .slide-leave-to {
+.slide-enter-from, .slide-leave-to {
   opacity: 0;
   transform: translateY(-10px);
 }

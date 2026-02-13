@@ -111,9 +111,9 @@
                 <td class="table-cell">
                   <span class="role-badge">{{ sp.role }}</span>
                 </td>
-                <td class="table-cell text-right">{{ sp.target | currency }}</td>
-                <td class="table-cell text-right">{{ getStats(sp.id).pipelineValue | currency }}</td>
-                <td class="table-cell text-right">{{ getStats(sp.id).wonRevenue | currency }}</td>
+                <td class="table-cell text-right">{{ $filters.currency(sp.target) }}</td>
+                <td class="table-cell text-right">{{ $filters.currency(getStats(sp.id).pipelineValue) }}</td>
+                <td class="table-cell text-right">{{ $filters.currency(getStats(sp.id).wonRevenue) }}</td>
                 <td class="table-cell text-right">
                   <span :class="winRateClass(getStats(sp.id).winRate)">
                     {{ getStats(sp.id).winRate }}%
@@ -190,6 +190,7 @@ import { mapGetters, mapActions } from 'vuex'
 import CommandBar from '@/components/layout/CommandBar.vue'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'SalespersonsList',
@@ -266,10 +267,10 @@ export default {
     }
   },
   created: function () {
-    this.$root.$on('shortcut-refresh', this.handleRefresh)
+    eventBus.on('shortcut-refresh', this.handleRefresh)
   },
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-refresh', this.handleRefresh)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-refresh', this.handleRefresh)
   },
   methods: {
     ...mapActions('salespersons', ['setSearch', 'setSort', 'setPage', 'deleteSalesperson']),

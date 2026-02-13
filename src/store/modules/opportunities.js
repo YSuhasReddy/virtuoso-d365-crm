@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import defaultOpportunities from '../../data/opportunities'
 
 const STORAGE_KEY = 'd365-opportunities'
@@ -152,14 +151,13 @@ const mutations = {
   },
 
   ADD(state, opportunity) {
-    const newAll = [...state.all, opportunity]
-    Vue.set(state, 'all', newAll)
+    state.all.push(opportunity)
   },
 
   UPDATE(state, updatedOpp) {
     const index = state.all.findIndex(o => o.id === updatedOpp.id)
     if (index !== -1) {
-      Vue.set(state.all, index, { ...state.all[index], ...updatedOpp, updatedAt: new Date().toISOString() })
+      state.all.splice(index, 1, { ...state.all[index], ...updatedOpp, updatedAt: new Date().toISOString() })
     }
   },
 
@@ -168,7 +166,7 @@ const mutations = {
   },
 
   SET_FILTER(state, { key, value }) {
-    Vue.set(state.filters, key, value)
+    state.filters[key] = value
   },
 
   SET_SEARCH(state, query) {

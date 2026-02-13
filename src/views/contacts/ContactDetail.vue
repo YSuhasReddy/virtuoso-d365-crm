@@ -220,10 +220,10 @@
                         <strong>Stage:</strong> {{ opp.currentStage }}
                       </span>
                       <span class="opp-meta-item">
-                        <strong>Value:</strong> {{ opp.estimatedValue | currency }}
+                        <strong>Value:</strong> {{ $filters.currency(opp.estimatedValue) }}
                       </span>
                       <span class="opp-meta-item">
-                        <strong>Close Date:</strong> {{ opp.estimatedCloseDate | date }}
+                        <strong>Close Date:</strong> {{ $filters.date(opp.estimatedCloseDate) }}
                       </span>
                       <span class="opp-meta-item">
                         <strong>Probability:</strong> {{ opp.probability }}%
@@ -266,9 +266,9 @@
                   </div>
                   <div class="doc-card-body">
                     <div class="doc-meta">
-                      <span><strong>Total:</strong> {{ doc.total | currency }}</span>
+                      <span><strong>Total:</strong> {{ $filters.currency(doc.total) }}</span>
                       <span><strong>Items:</strong> {{ doc.lines.length }}</span>
-                      <span><strong>Created:</strong> {{ doc.createdAt | date }}</span>
+                      <span><strong>Created:</strong> {{ $filters.date(doc.createdAt) }}</span>
                     </div>
                     <p v-if="doc.notes" class="doc-notes">{{ doc.notes }}</p>
                   </div>
@@ -299,13 +299,13 @@
                         <strong>Type:</strong> {{ camp.type }}
                       </span>
                       <span class="campaign-meta-item">
-                        <strong>Start:</strong> {{ camp.startDate | date }}
+                        <strong>Start:</strong> {{ $filters.date(camp.startDate) }}
                       </span>
                       <span class="campaign-meta-item">
-                        <strong>End:</strong> {{ camp.endDate | date }}
+                        <strong>End:</strong> {{ $filters.date(camp.endDate) }}
                       </span>
                       <span class="campaign-meta-item">
-                        <strong>Budget:</strong> {{ camp.budget | currency }}
+                        <strong>Budget:</strong> {{ $filters.currency(camp.budget) }}
                       </span>
                     </div>
                   </div>
@@ -349,6 +349,7 @@ import FactBox from '@/components/common/FactBox.vue'
 import ActivityTimeline from '@/components/common/ActivityTimeline.vue'
 import RecordNavigation from '@/components/common/RecordNavigation.vue'
 import salespersons from '@/data/salespersons'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'ContactDetail',
@@ -576,12 +577,12 @@ export default {
     }
   },
   created() {
-    this.$root.$on('shortcut-refresh', this.refreshData)
-    this.$root.$on('shortcut-save', this.handleSave)
+    eventBus.on('shortcut-refresh', this.refreshData)
+    eventBus.on('shortcut-save', this.handleSave)
   },
-  beforeDestroy() {
-    this.$root.$off('shortcut-refresh', this.refreshData)
-    this.$root.$off('shortcut-save', this.handleSave)
+  beforeUnmount() {
+    eventBus.off('shortcut-refresh', this.refreshData)
+    eventBus.off('shortcut-save', this.handleSave)
   },
   methods: {
     ...mapActions('contacts', ['deleteContact']),

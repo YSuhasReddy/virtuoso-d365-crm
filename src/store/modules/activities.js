@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import defaultActivities from '../../data/activities'
 
 const STORAGE_KEY = 'd365-activities'
@@ -152,14 +151,13 @@ const mutations = {
   },
 
   ADD(state, activity) {
-    const newAll = [...state.all, activity]
-    Vue.set(state, 'all', newAll)
+    state.all.push(activity)
   },
 
   UPDATE(state, updatedActivity) {
     const index = state.all.findIndex(a => a.id === updatedActivity.id)
     if (index !== -1) {
-      Vue.set(state.all, index, { ...state.all[index], ...updatedActivity })
+      state.all.splice(index, 1, { ...state.all[index], ...updatedActivity })
     }
   },
 
@@ -168,7 +166,7 @@ const mutations = {
   },
 
   SET_FILTER(state, { key, value }) {
-    Vue.set(state.filters, key, value)
+    state.filters[key] = value
   },
 
   SET_SEARCH(state, query) {

@@ -181,6 +181,7 @@ import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 import FilterBuilder from '@/components/common/FilterBuilder.vue'
 import BulkEditPanel from '@/components/common/BulkEditPanel.vue'
 import salespersons from '@/data/salespersons'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'OpportunitiesList',
@@ -383,13 +384,13 @@ export default {
     this._shortcutSave = function () {
       // No save action on list view; treat as no-op
     }
-    this.$root.$on('shortcut-refresh', this._shortcutRefresh)
-    this.$root.$on('shortcut-save', this._shortcutSave)
+    eventBus.on('shortcut-refresh', this._shortcutRefresh)
+    eventBus.on('shortcut-save', this._shortcutSave)
   },
 
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-refresh', this._shortcutRefresh)
-    this.$root.$off('shortcut-save', this._shortcutSave)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-refresh', this._shortcutRefresh)
+    eventBus.off('shortcut-save', this._shortcutSave)
   },
 
   methods: {
@@ -620,7 +621,7 @@ export default {
   transition: all 0.2s ease;
   overflow: hidden;
 }
-.slide-enter, .slide-leave-to {
+.slide-enter-from, .slide-leave-to {
   opacity: 0;
   max-height: 0;
   padding-top: 0;

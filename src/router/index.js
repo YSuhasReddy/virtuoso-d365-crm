@@ -1,8 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import store from '../store'
-
-Vue.use(VueRouter)
 
 const routes = [
   {
@@ -214,18 +211,17 @@ const routes = [
 
   // Catch-all
   {
-    path: '*',
+    path: '/:pathMatch(.*)*',
     redirect: '/dashboard'
   }
 ]
 
-const router = new VueRouter({
-  mode: 'hash',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHashHistory(process.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) return savedPosition
-    return { x: 0, y: 0 }
+    return { left: 0, top: 0 }
   }
 })
 

@@ -176,26 +176,26 @@
               <tr v-for="row in monthlySummary" :key="row.month">
                 <td class="font-semibold">{{ row.monthLabel }}</td>
                 <td class="text-right">{{ row.quoteCount }}</td>
-                <td class="text-right">{{ row.quoteValue | currency }}</td>
+                <td class="text-right">{{ $filters.currency(row.quoteValue) }}</td>
                 <td class="text-right">{{ row.orderCount }}</td>
-                <td class="text-right">{{ row.orderValue | currency }}</td>
+                <td class="text-right">{{ $filters.currency(row.orderValue) }}</td>
                 <td class="text-right">{{ row.invoiceCount }}</td>
-                <td class="text-right">{{ row.invoiceValue | currency }}</td>
+                <td class="text-right">{{ $filters.currency(row.invoiceValue) }}</td>
                 <td class="text-right">{{ row.creditMemoCount }}</td>
-                <td class="text-right font-semibold">{{ row.netRevenue | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(row.netRevenue) }}</td>
               </tr>
             </tbody>
             <tfoot>
               <tr class="totals-row">
                 <td class="font-semibold">Total</td>
                 <td class="text-right font-semibold">{{ monthlyTotals.quoteCount }}</td>
-                <td class="text-right font-semibold">{{ monthlyTotals.quoteValue | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(monthlyTotals.quoteValue) }}</td>
                 <td class="text-right font-semibold">{{ monthlyTotals.orderCount }}</td>
-                <td class="text-right font-semibold">{{ monthlyTotals.orderValue | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(monthlyTotals.orderValue) }}</td>
                 <td class="text-right font-semibold">{{ monthlyTotals.invoiceCount }}</td>
-                <td class="text-right font-semibold">{{ monthlyTotals.invoiceValue | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(monthlyTotals.invoiceValue) }}</td>
                 <td class="text-right font-semibold">{{ monthlyTotals.creditMemoCount }}</td>
-                <td class="text-right font-semibold">{{ monthlyTotals.netRevenue | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(monthlyTotals.netRevenue) }}</td>
               </tr>
             </tfoot>
           </table>
@@ -256,8 +256,8 @@
                 <td class="text-right">{{ row.quoteCount }}</td>
                 <td class="text-right">{{ row.orderCount }}</td>
                 <td class="text-right">{{ row.invoiceCount }}</td>
-                <td class="text-right font-semibold">{{ row.totalRevenue | currency }}</td>
-                <td>{{ row.lastActivityDate | date }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(row.totalRevenue) }}</td>
+                <td>{{ $filters.date(row.lastActivityDate) }}</td>
               </tr>
             </tbody>
           </table>
@@ -313,8 +313,8 @@
                 </td>
                 <td class="font-semibold">{{ row.description }}</td>
                 <td class="text-right">{{ row.totalQty }}</td>
-                <td class="text-right font-semibold">{{ row.totalRevenue | currency }}</td>
-                <td class="text-right">{{ row.avgUnitPrice | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(row.totalRevenue) }}</td>
+                <td class="text-right">{{ $filters.currency(row.avgUnitPrice) }}</td>
                 <td class="text-right">{{ row.docCount }}</td>
               </tr>
             </tbody>
@@ -322,7 +322,7 @@
               <tr class="totals-row">
                 <td colspan="2" class="font-semibold">Total</td>
                 <td class="text-right font-semibold">{{ itemTotals.totalQty }}</td>
-                <td class="text-right font-semibold">{{ itemTotals.totalRevenue | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(itemTotals.totalRevenue) }}</td>
                 <td class="text-right"></td>
                 <td class="text-right"></td>
               </tr>
@@ -392,12 +392,12 @@
                 <td class="text-right">{{ row.openCount }}</td>
                 <td class="text-right text-green-700 font-semibold">{{ row.wonCount }}</td>
                 <td class="text-right text-red-600">{{ row.lostCount }}</td>
-                <td class="text-right">{{ row.pipelineValue | currency }}</td>
-                <td class="text-right font-semibold">{{ row.wonRevenue | currency }}</td>
+                <td class="text-right">{{ $filters.currency(row.pipelineValue) }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(row.wonRevenue) }}</td>
                 <td class="text-right">
                   <span class="win-rate-badge" :class="winRateClass(row.winRate)">{{ row.winRate }}%</span>
                 </td>
-                <td class="text-right">{{ row.avgDealSize | currency }}</td>
+                <td class="text-right">{{ $filters.currency(row.avgDealSize) }}</td>
               </tr>
             </tbody>
             <tfoot>
@@ -406,10 +406,10 @@
                 <td class="text-right font-semibold">{{ spTotals.openCount }}</td>
                 <td class="text-right font-semibold">{{ spTotals.wonCount }}</td>
                 <td class="text-right font-semibold">{{ spTotals.lostCount }}</td>
-                <td class="text-right font-semibold">{{ spTotals.pipelineValue | currency }}</td>
-                <td class="text-right font-semibold">{{ spTotals.wonRevenue | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(spTotals.pipelineValue) }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(spTotals.wonRevenue) }}</td>
                 <td class="text-right font-semibold">{{ spTotals.winRate }}%</td>
-                <td class="text-right font-semibold">{{ spTotals.avgDealSize | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(spTotals.avgDealSize) }}</td>
               </tr>
             </tfoot>
           </table>
@@ -434,7 +434,7 @@
                     :style="{ width: spBarWidth(row.target) }"
                   ></div>
                 </div>
-                <div class="sp-perf-value">{{ row.wonRevenue | currency }}</div>
+                <div class="sp-perf-value">{{ $filters.currency(row.wonRevenue) }}</div>
               </div>
             </div>
             <div class="sp-perf-legend">
@@ -474,9 +474,9 @@
                   <span class="font-semibold">{{ stage.name }}</span>
                 </td>
                 <td class="text-right">{{ stage.count }}</td>
-                <td class="text-right font-semibold">{{ stage.value | currency }}</td>
-                <td class="text-right">{{ stage.avgValue | currency }}</td>
-                <td class="text-right">{{ stage.weightedValue | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(stage.value) }}</td>
+                <td class="text-right">{{ $filters.currency(stage.avgValue) }}</td>
+                <td class="text-right">{{ $filters.currency(stage.weightedValue) }}</td>
                 <td>
                   <div class="pipeline-dist-bar">
                     <div
@@ -491,9 +491,9 @@
               <tr class="totals-row">
                 <td class="font-semibold">Total Pipeline</td>
                 <td class="text-right font-semibold">{{ pipelineTotals.count }}</td>
-                <td class="text-right font-semibold">{{ pipelineTotals.value | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(pipelineTotals.value) }}</td>
                 <td class="text-right"></td>
-                <td class="text-right font-semibold">{{ pipelineTotals.weightedValue | currency }}</td>
+                <td class="text-right font-semibold">{{ $filters.currency(pipelineTotals.weightedValue) }}</td>
                 <td></td>
               </tr>
             </tfoot>
@@ -533,11 +533,11 @@
                   <span class="stage-indicator" :style="{ background: stageColor(opp.currentStage) }"></span>
                   {{ opp.currentStage }}
                 </td>
-                <td class="text-right">{{ opp.estimatedValue | currency }}</td>
+                <td class="text-right">{{ $filters.currency(opp.estimatedValue) }}</td>
                 <td class="text-right">
                   <span class="aging-badge" :class="agingClass(opp.daysInStage)">{{ opp.daysInStage }} days</span>
                 </td>
-                <td>{{ opp.estimatedCloseDate | date }}</td>
+                <td>{{ $filters.date(opp.estimatedCloseDate) }}</td>
                 <td>
                   <span class="close-status" :class="opp.isOverdue ? 'status-overdue' : 'status-ontrack'">
                     {{ opp.isOverdue ? 'Overdue' : 'On Track' }}
@@ -560,17 +560,17 @@
             <div class="wl-stat-card wl-won">
               <div class="wl-number">{{ winLossData.wonCount }}</div>
               <div class="wl-label">Won</div>
-              <div class="wl-value">{{ winLossData.wonValue | currency }}</div>
+              <div class="wl-value">{{ $filters.currency(winLossData.wonValue) }}</div>
             </div>
             <div class="wl-stat-card wl-lost">
               <div class="wl-number">{{ winLossData.lostCount }}</div>
               <div class="wl-label">Lost</div>
-              <div class="wl-value">{{ winLossData.lostValue | currency }}</div>
+              <div class="wl-value">{{ $filters.currency(winLossData.lostValue) }}</div>
             </div>
             <div class="wl-stat-card wl-open">
               <div class="wl-number">{{ winLossData.openCount }}</div>
               <div class="wl-label">Open</div>
-              <div class="wl-value">{{ winLossData.openValue | currency }}</div>
+              <div class="wl-value">{{ $filters.currency(winLossData.openValue) }}</div>
             </div>
             <div class="wl-stat-card wl-rate">
               <div class="wl-number">{{ winLossData.winRate }}%</div>

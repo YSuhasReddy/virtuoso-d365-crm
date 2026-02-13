@@ -49,14 +49,14 @@
         <div class="kpi-grid">
           <!-- Pipeline Value -->
           <div class="kpi-card border-l-4 border-blue-500">
-            <div class="kpi-value text-blue-700">{{ stats.pipelineValue | currency }}</div>
+            <div class="kpi-value text-blue-700">{{ $filters.currency(stats.pipelineValue) }}</div>
             <div class="kpi-label">Pipeline Value</div>
             <div class="kpi-sub">{{ stats.openOpportunities }} open opportunit{{ stats.openOpportunities === 1 ? 'y' : 'ies' }}</div>
           </div>
 
           <!-- Won Revenue -->
           <div class="kpi-card border-l-4 border-green-500">
-            <div class="kpi-value text-green-700">{{ stats.wonRevenue | currency }}</div>
+            <div class="kpi-value text-green-700">{{ $filters.currency(stats.wonRevenue) }}</div>
             <div class="kpi-label">Won Revenue</div>
             <div class="kpi-sub">{{ stats.wonOpportunities }} won deal{{ stats.wonOpportunities === 1 ? '' : 's' }}</div>
           </div>
@@ -72,7 +72,7 @@
           <div class="kpi-card border-l-4" :class="targetBorderClass">
             <div class="kpi-value" :class="targetTextClass">{{ stats.targetAchievement }}%</div>
             <div class="kpi-label">Target Achievement</div>
-            <div class="kpi-sub">Target: {{ salesperson.target | currency }}</div>
+            <div class="kpi-sub">Target: {{ $filters.currency(salesperson.target) }}</div>
             <div class="mt-2">
               <div class="h-2 bg-gray-200 rounded overflow-hidden">
                 <div
@@ -165,10 +165,10 @@
                     <strong>Stage:</strong> {{ opp.currentStage }}
                   </span>
                   <span class="opp-meta-item">
-                    <strong>Value:</strong> {{ opp.estimatedValue | currency }}
+                    <strong>Value:</strong> {{ $filters.currency(opp.estimatedValue) }}
                   </span>
                   <span class="opp-meta-item">
-                    <strong>Close Date:</strong> {{ opp.estimatedCloseDate | date }}
+                    <strong>Close Date:</strong> {{ $filters.date(opp.estimatedCloseDate) }}
                   </span>
                   <span class="opp-meta-item">
                     <strong>Probability:</strong> {{ opp.probability }}%
@@ -204,7 +204,7 @@
               <div class="activity-card-body">
                 <div class="activity-meta">
                   <span><strong>Type:</strong> {{ activity.type }}</span>
-                  <span><strong>Due:</strong> {{ activity.dueDate | date }}</span>
+                  <span><strong>Due:</strong> {{ $filters.date(activity.dueDate) }}</span>
                   <span v-if="activity.duration"><strong>Duration:</strong> {{ activity.duration }} min</span>
                   <span v-if="activity.contactId"><strong>Contact:</strong> {{ getContactName(activity.contactId) }}</span>
                 </div>
@@ -235,6 +235,7 @@ import { mapGetters, mapActions } from 'vuex'
 import CommandBar from '@/components/layout/CommandBar.vue'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'SalespersonDetail',
@@ -393,10 +394,10 @@ export default {
     }
   },
   created: function () {
-    this.$root.$on('shortcut-refresh', this.refreshData)
+    eventBus.on('shortcut-refresh', this.refreshData)
   },
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-refresh', this.refreshData)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-refresh', this.refreshData)
   },
   methods: {
     ...mapActions('salespersons', ['deleteSalesperson']),

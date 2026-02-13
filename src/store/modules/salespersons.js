@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import defaultSalespersons from '../../data/salespersons'
 
 const STORAGE_KEY = 'd365-salespersons'
@@ -130,14 +129,13 @@ const mutations = {
   },
 
   ADD: function (state, salesperson) {
-    var newAll = [].concat(state.all, [salesperson])
-    Vue.set(state, 'all', newAll)
+    state.all.push(salesperson)
   },
 
   UPDATE: function (state, updatedSp) {
     var index = state.all.findIndex(function (sp) { return sp.id === updatedSp.id })
     if (index !== -1) {
-      Vue.set(state.all, index, Object.assign({}, state.all[index], updatedSp, { updatedAt: new Date().toISOString() }))
+      state.all.splice(index, 1, Object.assign({}, state.all[index], updatedSp, { updatedAt: new Date().toISOString() }))
     }
   },
 

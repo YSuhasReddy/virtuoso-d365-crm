@@ -104,6 +104,6 @@ export default {
 
 .slide-enter-active { transition: all 0.3s ease; }
 .slide-leave-active { transition: all 0.2s ease; }
-.slide-enter { transform: translateX(100%); opacity: 0; }
+.slide-enter-from { transform: translateX(100%); opacity: 0; }
 .slide-leave-to { transform: translateX(100%); opacity: 0; }
 </style>

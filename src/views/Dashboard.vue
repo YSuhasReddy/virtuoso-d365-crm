@@ -140,7 +140,7 @@
                   <div class="activity-subject">{{ activity.subject }}</div>
                   <div class="activity-meta">
                     <span>{{ activity.type }}</span>
-                    <span v-if="activity.dueDate"> &middot; {{ activity.dueDate | shortDate }}</span>
+                    <span v-if="activity.dueDate"> &middot; {{ $filters.shortDate(activity.dueDate) }}</span>
                     <StatusBadge v-if="activity.status === 'Completed'" status="Completed" />
                   </div>
                 </div>
@@ -199,7 +199,7 @@
                     <td class="cell-link">{{ opp.name }}</td>
                     <td>{{ opp.contactName }}</td>
                     <td><StatusBadge :status="opp.currentStage" /></td>
-                    <td class="text-right font-semibold">{{ opp.estimatedValue | currency }}</td>
+                    <td class="text-right font-semibold">{{ $filters.currency(opp.estimatedValue) }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -253,6 +253,7 @@ import KpiCard from '@/components/common/KpiCard.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
 import ActivityTimeline from '@/components/common/ActivityTimeline.vue'
 import salespersons from '@/data/salespersons'
+import eventBus from '../utils/eventBus'
 
 export default {
   name: 'Dashboard',
@@ -358,10 +359,10 @@ export default {
     setTimeout(function () {
       self.loading = false
     }, 500)
-    this.$root.$on('shortcut-refresh', this.handleRefresh)
+    eventBus.on('shortcut-refresh', this.handleRefresh)
   },
-  beforeDestroy() {
-    this.$root.$off('shortcut-refresh', this.handleRefresh)
+  beforeUnmount() {
+    eventBus.off('shortcut-refresh', this.handleRefresh)
   }
 }
 </script>

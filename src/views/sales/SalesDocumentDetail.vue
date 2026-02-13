@@ -126,7 +126,7 @@
                 </div>
                 <div class="info-field">
                   <span class="info-label">Valid Until</span>
-                  <span class="info-value">{{ document.validUntil | date || '--' }}</span>
+                  <span class="info-value">{{ $filters.date(document.validUntil) || '--' }}</span>
                 </div>
               </div>
             </div>
@@ -153,9 +153,9 @@
                       <td class="col-num">{{ index + 1 }}</td>
                       <td class="col-desc">{{ line.description }}</td>
                       <td class="col-qty">{{ line.quantity }}</td>
-                      <td class="col-price">{{ line.unitPrice | currency }}</td>
+                      <td class="col-price">{{ $filters.currency(line.unitPrice) }}</td>
                       <td class="col-disc">{{ line.discount || 0 }}%</td>
-                      <td class="col-amount">{{ line.amount | currency }}</td>
+                      <td class="col-amount">{{ $filters.currency(line.amount) }}</td>
                     </tr>
                     <tr v-if="!document.lines || document.lines.length === 0">
                       <td colspan="6" class="empty-lines">No line items</td>
@@ -169,7 +169,7 @@
                 <div class="totals-grid">
                   <div class="totals-row">
                     <span class="totals-label">Subtotal</span>
-                    <span class="totals-value">{{ document.subtotal | currency }}</span>
+                    <span class="totals-value">{{ $filters.currency(document.subtotal) }}</span>
                   </div>
                   <div class="totals-row">
                     <span class="totals-label">Discount</span>
@@ -181,7 +181,7 @@
                   </div>
                   <div class="totals-row totals-total">
                     <span class="totals-label">Total</span>
-                    <span class="totals-value">{{ document.total | currency }}</span>
+                    <span class="totals-value">{{ $filters.currency(document.total) }}</span>
                   </div>
                 </div>
               </div>
@@ -241,6 +241,7 @@ import FactBox from '@/components/common/FactBox.vue'
 import RecordNavigation from '@/components/common/RecordNavigation.vue'
 import DocumentPreview from '@/components/common/DocumentPreview.vue'
 import { generateDocumentPDF } from '@/utils/pdfGenerator'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'SalesDocumentDetail',
@@ -408,12 +409,12 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on('shortcut-refresh', this.handleRefresh)
-    this.$root.$on('shortcut-save', this.handleSave)
+    eventBus.on('shortcut-refresh', this.handleRefresh)
+    eventBus.on('shortcut-save', this.handleSave)
   },
-  beforeDestroy() {
-    this.$root.$off('shortcut-refresh', this.handleRefresh)
-    this.$root.$off('shortcut-save', this.handleSave)
+  beforeUnmount() {
+    eventBus.off('shortcut-refresh', this.handleRefresh)
+    eventBus.off('shortcut-save', this.handleSave)
   }
 }
 </script>

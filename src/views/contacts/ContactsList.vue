@@ -133,6 +133,7 @@ import StatusBadge from '@/components/common/StatusBadge.vue'
 import FilterBuilder from '@/components/common/FilterBuilder.vue'
 import BulkEditPanel from '@/components/common/BulkEditPanel.vue'
 import salespersons from '@/data/salespersons'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'ContactsList',
@@ -244,12 +245,12 @@ export default {
     }
   },
   created() {
-    this.$root.$on('shortcut-toggle-filter', this.toggleFilters)
-    this.$root.$on('shortcut-refresh', this.handleRefresh)
+    eventBus.on('shortcut-toggle-filter', this.toggleFilters)
+    eventBus.on('shortcut-refresh', this.handleRefresh)
   },
-  beforeDestroy() {
-    this.$root.$off('shortcut-toggle-filter', this.toggleFilters)
-    this.$root.$off('shortcut-refresh', this.handleRefresh)
+  beforeUnmount() {
+    eventBus.off('shortcut-toggle-filter', this.toggleFilters)
+    eventBus.off('shortcut-refresh', this.handleRefresh)
   },
   methods: {
     ...mapActions('contacts', ['setFilter', 'setSearch', 'setSort', 'setPage', 'setPerPage', 'deleteContact', 'updateContact']),
@@ -467,7 +468,7 @@ export default {
   max-height: 500px;
   overflow: hidden;
 }
-.slide-enter,
+.slide-enter-from,
 .slide-leave-to {
   max-height: 0;
   padding-top: 0;

@@ -353,12 +353,12 @@ export default {
   transition: transform 0.3s ease;
 }
 
-.slide-right-enter,
+.slide-right-enter-from,
 .slide-right-leave-to {
   opacity: 0;
 }
 
-.slide-right-enter .bulk-edit-panel,
+.slide-right-enter-from .bulk-edit-panel,
 .slide-right-leave-to .bulk-edit-panel {
   transform: translateX(100%);
 }

@@ -23,7 +23,7 @@
         />
         <div class="header-value">
           <span class="value-label">Estimated Value</span>
-          <span class="value-amount">{{ opportunity.estimatedValue | currency }}</span>
+          <span class="value-amount">{{ $filters.currency(opportunity.estimatedValue) }}</span>
         </div>
       </div>
     </div>
@@ -105,11 +105,11 @@
                   </div>
                   <div class="field-row">
                     <label class="field-label">Estimated Value</label>
-                    <span class="field-value">{{ opportunity.estimatedValue | currency }}</span>
+                    <span class="field-value">{{ $filters.currency(opportunity.estimatedValue) }}</span>
                   </div>
                   <div class="field-row">
                     <label class="field-label">Estimated Close Date</label>
-                    <span class="field-value">{{ opportunity.estimatedCloseDate | date }}</span>
+                    <span class="field-value">{{ $filters.date(opportunity.estimatedCloseDate) }}</span>
                   </div>
                   <div class="field-row">
                     <label class="field-label">Probability</label>
@@ -138,11 +138,11 @@
                 <div class="field-grid">
                   <div class="field-row">
                     <label class="field-label">Created</label>
-                    <span class="field-value">{{ opportunity.createdAt | date }}</span>
+                    <span class="field-value">{{ $filters.date(opportunity.createdAt) }}</span>
                   </div>
                   <div class="field-row">
                     <label class="field-label">Last Updated</label>
-                    <span class="field-value">{{ opportunity.updatedAt | date }}</span>
+                    <span class="field-value">{{ $filters.date(opportunity.updatedAt) }}</span>
                   </div>
                 </div>
               </div>
@@ -193,7 +193,7 @@
                       <span class="doc-type">{{ doc.type }}</span>
                     </div>
                     <div class="doc-meta">
-                      <span class="doc-amount">{{ doc.total | currency }}</span>
+                      <span class="doc-amount">{{ $filters.currency(doc.total) }}</span>
                       <StatusBadge :status="doc.status" />
                     </div>
                   </div>
@@ -294,6 +294,7 @@ import FactBox from '@/components/common/FactBox.vue'
 import ActivityTimeline from '@/components/common/ActivityTimeline.vue'
 import RecordNavigation from '@/components/common/RecordNavigation.vue'
 import salespersons from '@/data/salespersons'
+import eventBus from '../../utils/eventBus'
 
 const OPEN_STAGES = ['Qualification', 'Development', 'Proposal', 'Negotiation']
 
@@ -559,13 +560,13 @@ export default {
     this._shortcutSave = function () {
       self.saveNotes()
     }
-    this.$root.$on('shortcut-refresh', this._shortcutRefresh)
-    this.$root.$on('shortcut-save', this._shortcutSave)
+    eventBus.on('shortcut-refresh', this._shortcutRefresh)
+    eventBus.on('shortcut-save', this._shortcutSave)
   },
 
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-refresh', this._shortcutRefresh)
-    this.$root.$off('shortcut-save', this._shortcutSave)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-refresh', this._shortcutRefresh)
+    eventBus.off('shortcut-save', this._shortcutSave)
   },
 
   methods: {

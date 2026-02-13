@@ -155,6 +155,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
 import salespersons from '@/data/salespersons'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'ActivityForm',
@@ -240,10 +241,10 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on('shortcut-save', this.handleSave)
+    eventBus.on('shortcut-save', this.handleSave)
   },
-  beforeDestroy() {
-    this.$root.$off('shortcut-save', this.handleSave)
+  beforeUnmount() {
+    eventBus.off('shortcut-save', this.handleSave)
   }
 }
 </script>

@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import defaultItems from '../../data/items'
 
 const STORAGE_KEY = 'd365-items'
@@ -124,25 +123,14 @@ var mutations = {
   },
 
   ADD_ITEM: function (state, item) {
-    var newAll = [].concat(state.all, [item])
-    Vue.set(state, 'all', newAll)
+    state.all.push(item)
   },
 
   UPDATE_ITEM: function (state, updatedItem) {
     var index = state.all.findIndex(function (item) { return item.id === updatedItem.id })
     if (index !== -1) {
-      var merged = {}
-      var existing = state.all[index]
-      var keys = Object.keys(existing)
-      for (var i = 0; i < keys.length; i++) {
-        merged[keys[i]] = existing[keys[i]]
-      }
-      var updateKeys = Object.keys(updatedItem)
-      for (var j = 0; j < updateKeys.length; j++) {
-        merged[updateKeys[j]] = updatedItem[updateKeys[j]]
-      }
-      merged.updatedAt = new Date().toISOString()
-      Vue.set(state.all, index, merged)
+      var merged = Object.assign({}, state.all[index], updatedItem, { updatedAt: new Date().toISOString() })
+      state.all.splice(index, 1, merged)
     }
   },
 
@@ -155,24 +143,21 @@ var mutations = {
     if (index !== -1) {
       var item = state.all[index]
       if (item.inventory) {
-        var updated = {}
-        var keys = Object.keys(item)
-        for (var i = 0; i < keys.length; i++) {
-          updated[keys[i]] = item[keys[i]]
-        }
-        updated.inventory = {
-          quantity: (item.inventory.quantity || 0) + payload.quantity,
-          reorderPoint: item.inventory.reorderPoint,
-          reorderQuantity: item.inventory.reorderQuantity
-        }
-        updated.updatedAt = new Date().toISOString()
-        Vue.set(state.all, index, updated)
+        var updated = Object.assign({}, item, {
+          inventory: {
+            quantity: (item.inventory.quantity || 0) + payload.quantity,
+            reorderPoint: item.inventory.reorderPoint,
+            reorderQuantity: item.inventory.reorderQuantity
+          },
+          updatedAt: new Date().toISOString()
+        })
+        state.all.splice(index, 1, updated)
       }
     }
   },
 
   SET_FILTER: function (state, payload) {
-    Vue.set(state.filters, payload.key, payload.value)
+    state.filters[payload.key] = payload.value
   },
 
   SET_SEARCH: function (state, query) {

@@ -395,6 +395,8 @@
 </template>
 
 <script>
+import eventBus from '../../utils/eventBus'
+
 export default {
   name: 'AppHeader',
   data() {
@@ -528,18 +530,18 @@ export default {
     document.addEventListener('mousedown', this._clickOutside)
 
     // Listen for keyboard shortcut to focus search
-    this.$root.$on('shortcut-focus-search', this.focusSearch)
-    this.$root.$on('shortcut-escape', this.onEscapeShortcut)
-    this.$root.$on('shortcut-toggle-shortcuts-help', this.toggleShortcutsHelp)
-    this.$root.$on('shortcut-close-shortcuts-help', this.closeShortcutsHelp)
+    eventBus.on('shortcut-focus-search', this.focusSearch)
+    eventBus.on('shortcut-escape', this.onEscapeShortcut)
+    eventBus.on('shortcut-toggle-shortcuts-help', this.toggleShortcutsHelp)
+    eventBus.on('shortcut-close-shortcuts-help', this.closeShortcutsHelp)
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     document.removeEventListener('mousedown', this._clickOutside)
-    this.$root.$off('shortcut-focus-search', this.focusSearch)
-    this.$root.$off('shortcut-escape', this.onEscapeShortcut)
-    this.$root.$off('shortcut-toggle-shortcuts-help', this.toggleShortcutsHelp)
-    this.$root.$off('shortcut-close-shortcuts-help', this.closeShortcutsHelp)
+    eventBus.off('shortcut-focus-search', this.focusSearch)
+    eventBus.off('shortcut-escape', this.onEscapeShortcut)
+    eventBus.off('shortcut-toggle-shortcuts-help', this.toggleShortcutsHelp)
+    eventBus.off('shortcut-close-shortcuts-help', this.closeShortcutsHelp)
     if (this.debounceTimer) {
       clearTimeout(this.debounceTimer)
     }

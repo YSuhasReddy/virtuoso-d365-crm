@@ -99,10 +99,10 @@
           <StatusBadge :status="row.type" />
         </template>
         <template #cell-unitPrice="{ row }">
-          {{ row.unitPrice | currency }}
+          {{ $filters.currency(row.unitPrice) }}
         </template>
         <template #cell-unitCost="{ row }">
-          {{ row.unitCost | currency }}
+          {{ $filters.currency(row.unitCost) }}
         </template>
         <template #cell-inventoryQty="{ row }">
           <span v-if="row.type === 'Inventory'" :class="{ 'low-stock': isLowStock(row) }">
@@ -137,6 +137,7 @@ import DataGrid from '@/components/common/DataGrid.vue'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'ItemsList',
@@ -220,12 +221,12 @@ export default {
     var self = this
     this._toggleFilters = function () { self.showFilters = !self.showFilters }
     this._handleRefresh = function () { self.handleRefresh() }
-    this.$root.$on('shortcut-toggle-filter', this._toggleFilters)
-    this.$root.$on('shortcut-refresh', this._handleRefresh)
+    eventBus.on('shortcut-toggle-filter', this._toggleFilters)
+    eventBus.on('shortcut-refresh', this._handleRefresh)
   },
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-toggle-filter', this._toggleFilters)
-    this.$root.$off('shortcut-refresh', this._handleRefresh)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-toggle-filter', this._toggleFilters)
+    eventBus.off('shortcut-refresh', this._handleRefresh)
   },
   methods: {
     ...mapActions('items', ['setFilter', 'setSearch', 'setSort', 'setPage', 'setPerPage', 'deleteItem']),
@@ -429,7 +430,7 @@ export default {
   max-height: 500px;
   overflow: hidden;
 }
-.slide-enter,
+.slide-enter-from,
 .slide-leave-to {
   max-height: 0;
   padding-top: 0;

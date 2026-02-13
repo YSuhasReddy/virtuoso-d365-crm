@@ -220,7 +220,7 @@ export default {
     },
 
     toggleExpand: function (id) {
-      this.$set(this.expandedIds, id, !this.expandedIds[id])
+      this.expandedIds[id] = !this.expandedIds[id]
     },
 
     handleLoadMore: function () {

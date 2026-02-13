@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     toggleGroup(label) {
-      this.$set(this.expandedGroups, label, !this.expandedGroups[label])
+      this.expandedGroups[label] = !this.expandedGroups[label]
     },
     isActive(item) {
       return this.$route.path === item.path || this.$route.path.startsWith(item.path + '/')
@@ -284,7 +284,7 @@ export default {
   max-height: 500px;
   opacity: 1;
 }
-.expand-enter, .expand-leave-to {
+.expand-enter-from, .expand-leave-to {
   max-height: 0;
   opacity: 0;
 }

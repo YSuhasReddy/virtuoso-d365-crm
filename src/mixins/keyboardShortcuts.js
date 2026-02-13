@@ -16,6 +16,8 @@
  *   ?              - Show keyboard shortcuts help
  */
 
+import eventBus from '../utils/eventBus'
+
 export default {
   data() {
     return {
@@ -40,28 +42,28 @@ export default {
       // Alt+S - Save
       if (e.altKey && e.key === 's') {
         e.preventDefault()
-        this.$root.$emit('shortcut-save')
+        eventBus.emit('shortcut-save')
         return
       }
 
       // Ctrl+F - Focus search
       if (e.ctrlKey && !e.shiftKey && e.key === 'f') {
         e.preventDefault()
-        this.$root.$emit('shortcut-focus-search')
+        eventBus.emit('shortcut-focus-search')
         return
       }
 
       // Ctrl+Shift+F - Toggle filter panel
       if (e.ctrlKey && e.shiftKey && e.key === 'F') {
         e.preventDefault()
-        this.$root.$emit('shortcut-toggle-filter')
+        eventBus.emit('shortcut-toggle-filter')
         return
       }
 
       // F5 - Refresh
       if (e.key === 'F5') {
         e.preventDefault()
-        this.$root.$emit('shortcut-refresh')
+        eventBus.emit('shortcut-refresh')
         return
       }
 
@@ -70,10 +72,10 @@ export default {
         // First check if shortcuts help is open
         if (this._ks_showShortcutsHelp) {
           this._ks_showShortcutsHelp = false
-          this.$root.$emit('shortcut-close-shortcuts-help')
+          eventBus.emit('shortcut-close-shortcuts-help')
           return
         }
-        this.$root.$emit('shortcut-escape')
+        eventBus.emit('shortcut-escape')
         if (this.$store) {
           if (this.$store.state.ui.quickCreateOpen) {
             this.$store.dispatch('ui/closeQuickCreate')
@@ -109,7 +111,7 @@ export default {
       // / - Focus search
       if (e.key === '/') {
         e.preventDefault()
-        this.$root.$emit('shortcut-focus-search')
+        eventBus.emit('shortcut-focus-search')
         return
       }
 
@@ -117,7 +119,7 @@ export default {
       if (e.key === '?') {
         e.preventDefault()
         this._ks_showShortcutsHelp = !this._ks_showShortcutsHelp
-        this.$root.$emit('shortcut-toggle-shortcuts-help')
+        eventBus.emit('shortcut-toggle-shortcuts-help')
         return
       }
     }
@@ -125,7 +127,7 @@ export default {
     document.addEventListener('keydown', this._shortcutHandler)
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this._shortcutHandler) {
       document.removeEventListener('keydown', this._shortcutHandler)
     }

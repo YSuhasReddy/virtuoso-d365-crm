@@ -187,6 +187,7 @@ import CommandBar from '@/components/layout/CommandBar.vue'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
 import BusinessProcessFlow from '@/components/common/BusinessProcessFlow.vue'
 import salespersons from '@/data/salespersons'
+import eventBus from '../../utils/eventBus'
 
 var STAGE_PROBABILITIES = {
   'Qualification': 10,
@@ -320,11 +321,11 @@ export default {
     this._shortcutSave = function () {
       self.handleSave()
     }
-    this.$root.$on('shortcut-save', this._shortcutSave)
+    eventBus.on('shortcut-save', this._shortcutSave)
   },
 
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-save', this._shortcutSave)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-save', this._shortcutSave)
   },
 
   watch: {

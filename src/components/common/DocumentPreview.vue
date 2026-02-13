@@ -92,7 +92,7 @@ export default {
   mounted: function () {
     window.addEventListener('keydown', this.handleKeydown)
   },
-  beforeDestroy: function () {
+  beforeUnmount: function () {
     window.removeEventListener('keydown', this.handleKeydown)
     document.body.style.overflow = ''
   }
@@ -105,7 +105,7 @@ export default {
 .preview-fade-leave-active {
   transition: opacity 0.2s ease;
 }
-.preview-fade-enter,
+.preview-fade-enter-from,
 .preview-fade-leave-to {
   opacity: 0;
 }

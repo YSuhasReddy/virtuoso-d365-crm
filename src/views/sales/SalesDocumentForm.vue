@@ -159,7 +159,7 @@
                   />
                 </td>
                 <td class="col-amount">
-                  <span class="amount-display">{{ line.amount | currency }}</span>
+                  <span class="amount-display">{{ $filters.currency(line.amount) }}</span>
                 </td>
                 <td class="col-actions">
                   <button class="remove-btn" @click="removeLine(index)" title="Remove line">
@@ -185,7 +185,7 @@
           <div class="totals-grid">
             <div class="totals-row">
               <span class="totals-label">Subtotal</span>
-              <span class="totals-value">{{ calculatedSubtotal | currency }}</span>
+              <span class="totals-value">{{ $filters.currency(calculatedSubtotal) }}</span>
             </div>
             <div class="totals-row totals-editable">
               <span class="totals-label">Discount %</span>
@@ -211,7 +211,7 @@
             </div>
             <div class="totals-row totals-total">
               <span class="totals-label">Total</span>
-              <span class="totals-value">{{ calculatedTotal | currency }}</span>
+              <span class="totals-value">{{ $filters.currency(calculatedTotal) }}</span>
             </div>
           </div>
         </div>
@@ -223,6 +223,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'SalesDocumentForm',
@@ -425,10 +426,10 @@ export default {
     this.loadExistingDocument()
   },
   mounted() {
-    this.$root.$on('shortcut-save', this.handleSave)
+    eventBus.on('shortcut-save', this.handleSave)
   },
-  beforeDestroy() {
-    this.$root.$off('shortcut-save', this.handleSave)
+  beforeUnmount() {
+    eventBus.off('shortcut-save', this.handleSave)
   },
   watch: {
     '$route.params.id': function () {

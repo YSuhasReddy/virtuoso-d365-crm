@@ -221,6 +221,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import CommandBar from '@/components/layout/CommandBar.vue'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'ItemForm',
@@ -321,11 +322,11 @@ export default {
         self.handleDiscard()
       }
     }
-    this.$root.$on('shortcut-save', this._handleSave)
+    eventBus.on('shortcut-save', this._handleSave)
     document.addEventListener('keydown', this._handleEscape)
   },
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-save', this._handleSave)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-save', this._handleSave)
     if (this._handleEscape) {
       document.removeEventListener('keydown', this._handleEscape)
     }

@@ -176,7 +176,7 @@ select.d365-field-input {
 .slide-enter-active, .slide-leave-active {
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
-.slide-enter, .slide-leave-to {
+.slide-enter-from, .slide-leave-to {
   transform: translateX(20px);
   opacity: 0;
 }
@@ -184,7 +184,7 @@ select.d365-field-input {
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.15s ease;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter-from, .fade-leave-to {
   opacity: 0;
 }
 

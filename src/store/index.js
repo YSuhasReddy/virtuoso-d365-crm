@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
 import contacts from './modules/contacts'
 import opportunities from './modules/opportunities'
 import activities from './modules/activities'
@@ -11,9 +10,7 @@ import campaigns from './modules/campaigns'
 import salespersons from './modules/salespersons'
 import auth from './modules/auth'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default createStore({
   modules: {
     contacts,
     opportunities,

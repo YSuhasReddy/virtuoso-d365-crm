@@ -393,7 +393,7 @@ export default {
 
 .slide-panel-enter-active { transition: all 0.25s ease; }
 .slide-panel-leave-active { transition: all 0.2s ease; }
-.slide-panel-enter .quick-create-panel,
+.slide-panel-enter-from .quick-create-panel,
 .slide-panel-leave-to .quick-create-panel {
   transform: translateX(100%);
 }

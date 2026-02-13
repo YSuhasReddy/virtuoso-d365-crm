@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import defaultContacts from '../../data/contacts'
 
 const STORAGE_KEY = 'd365-contacts'
@@ -111,15 +110,13 @@ const mutations = {
   },
 
   ADD_CONTACT(state, contact) {
-    // Use Vue.set pattern by creating a new array for reactivity
-    const newAll = [...state.all, contact]
-    Vue.set(state, 'all', newAll)
+    state.all.push(contact)
   },
 
   UPDATE_CONTACT(state, updatedContact) {
     const index = state.all.findIndex(c => c.id === updatedContact.id)
     if (index !== -1) {
-      Vue.set(state.all, index, { ...state.all[index], ...updatedContact, updatedAt: new Date().toISOString() })
+      state.all.splice(index, 1, { ...state.all[index], ...updatedContact, updatedAt: new Date().toISOString() })
     }
   },
 
@@ -128,7 +125,7 @@ const mutations = {
   },
 
   SET_FILTER(state, { key, value }) {
-    Vue.set(state.filters, key, value)
+    state.filters[key] = value
   },
 
   SET_SEARCH(state, query) {

@@ -89,11 +89,11 @@
                   <div class="section-body">
                     <div class="detail-field">
                       <span class="field-label">Unit Price</span>
-                      <span class="field-value price-value">{{ item.unitPrice | currency }}</span>
+                      <span class="field-value price-value">{{ $filters.currency(item.unitPrice) }}</span>
                     </div>
                     <div class="detail-field">
                       <span class="field-label">Unit Cost</span>
-                      <span class="field-value">{{ item.unitCost | currency }}</span>
+                      <span class="field-value">{{ $filters.currency(item.unitCost) }}</span>
                     </div>
                     <div class="detail-field">
                       <span class="field-label">Profit Margin</span>
@@ -151,11 +151,11 @@
                     </div>
                     <div class="detail-field">
                       <span class="field-label">Created</span>
-                      <span class="field-value">{{ item.createdAt | date }}</span>
+                      <span class="field-value">{{ $filters.date(item.createdAt) }}</span>
                     </div>
                     <div class="detail-field">
                       <span class="field-label">Last Modified</span>
-                      <span class="field-value">{{ item.updatedAt | date }}</span>
+                      <span class="field-value">{{ $filters.date(item.updatedAt) }}</span>
                     </div>
                   </div>
                 </div>
@@ -205,6 +205,7 @@ import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
 import FactBox from '@/components/common/FactBox.vue'
 import RecordNavigation from '@/components/common/RecordNavigation.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'ItemDetail',
@@ -374,12 +375,12 @@ export default {
     var self = this
     this._refreshData = function () { self.$store.dispatch('items/initItems') }
     this._handleSave = function () { self.goToEdit() }
-    this.$root.$on('shortcut-refresh', this._refreshData)
-    this.$root.$on('shortcut-save', this._handleSave)
+    eventBus.on('shortcut-refresh', this._refreshData)
+    eventBus.on('shortcut-save', this._handleSave)
   },
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-refresh', this._refreshData)
-    this.$root.$off('shortcut-save', this._handleSave)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-refresh', this._refreshData)
+    eventBus.off('shortcut-save', this._handleSave)
   },
   methods: {
     ...mapActions('items', ['deleteItem']),

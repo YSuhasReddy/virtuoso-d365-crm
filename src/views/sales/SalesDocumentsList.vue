@@ -71,20 +71,20 @@
           <router-link
             :to="'/sales/' + routeType + '/' + row.id"
             class="cell-link"
-            @click.native.stop
+            @click.stop
           >{{ row.number }}</router-link>
         </template>
         <template #cell-status="{ value }">
           <StatusBadge :status="value" />
         </template>
         <template #cell-subtotal="{ value }">
-          {{ value | currency }}
+          {{ $filters.currency(value) }}
         </template>
         <template #cell-total="{ value }">
-          <span class="total-value">{{ value | currency }}</span>
+          <span class="total-value">{{ $filters.currency(value) }}</span>
         </template>
         <template #cell-createdAt="{ value }">
-          {{ value | date }}
+          {{ $filters.date(value) }}
         </template>
       </DataGrid>
     </div>
@@ -110,6 +110,7 @@ import Breadcrumb from '@/components/common/Breadcrumb.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 import FilterBuilder from '@/components/common/FilterBuilder.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'SalesDocumentsList',
@@ -397,12 +398,12 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on('shortcut-refresh', this.handleRefresh)
-    this.$root.$on('shortcut-new', this.handleNew)
+    eventBus.on('shortcut-refresh', this.handleRefresh)
+    eventBus.on('shortcut-new', this.handleNew)
   },
-  beforeDestroy() {
-    this.$root.$off('shortcut-refresh', this.handleRefresh)
-    this.$root.$off('shortcut-new', this.handleNew)
+  beforeUnmount() {
+    eventBus.off('shortcut-refresh', this.handleRefresh)
+    eventBus.off('shortcut-new', this.handleNew)
   },
   watch: {
     docType() {
@@ -479,7 +480,7 @@ export default {
 .slide-enter-active, .slide-leave-active {
   transition: all 0.2s ease;
 }
-.slide-enter, .slide-leave-to {
+.slide-enter-from, .slide-leave-to {
   opacity: 0;
   transform: translateY(-10px);
 }

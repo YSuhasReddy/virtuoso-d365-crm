@@ -124,7 +124,7 @@ function calculatePosition(el, binding) {
 }
 
 const smartPositionDirective = {
-  bind: function (el, binding) {
+  beforeMount: function (el, binding) {
     // Store handlers for cleanup
     var debouncedCalc = debounce(function () {
       calculatePosition(el, binding)
@@ -139,20 +139,16 @@ const smartPositionDirective = {
     window.addEventListener('scroll', el._smartPositionHandlers.scroll, true)
   },
 
-  inserted: function (el, binding) {
+  mounted: function (el, binding) {
     // Calculate once element is in DOM
     calculatePosition(el, binding)
   },
 
-  update: function (el, binding) {
+  updated: function (el, binding) {
     calculatePosition(el, binding)
   },
 
-  componentUpdated: function (el, binding) {
-    calculatePosition(el, binding)
-  },
-
-  unbind: function (el) {
+  unmounted: function (el) {
     if (el._smartPositionHandlers) {
       window.removeEventListener('resize', el._smartPositionHandlers.resize)
       window.removeEventListener('scroll', el._smartPositionHandlers.scroll, true)
@@ -162,8 +158,8 @@ const smartPositionDirective = {
 }
 
 var SmartPositionPlugin = {
-  install: function (Vue) {
-    Vue.directive('smart-position', smartPositionDirective)
+  install: function (app) {
+    app.directive('smart-position', smartPositionDirective)
   }
 }
 

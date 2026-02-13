@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import defaultDocuments from '../../data/salesDocuments'
 
 const STORAGE_KEY = 'd365-sales'
@@ -127,14 +126,13 @@ const mutations = {
   },
 
   ADD(state, document) {
-    const newDocs = [...state.documents, document]
-    Vue.set(state, 'documents', newDocs)
+    state.documents.push(document)
   },
 
   UPDATE(state, updatedDoc) {
     const index = state.documents.findIndex(d => d.id === updatedDoc.id)
     if (index !== -1) {
-      Vue.set(state.documents, index, { ...state.documents[index], ...updatedDoc, updatedAt: new Date().toISOString() })
+      state.documents.splice(index, 1, { ...state.documents[index], ...updatedDoc, updatedAt: new Date().toISOString() })
     }
   },
 
@@ -145,8 +143,7 @@ const mutations = {
   ADD_LINE(state, { docId, line }) {
     const doc = state.documents.find(d => d.id === docId)
     if (doc) {
-      const newLines = [...doc.lines, line]
-      Vue.set(doc, 'lines', newLines)
+      doc.lines.push(line)
     }
   },
 
@@ -155,7 +152,7 @@ const mutations = {
     if (doc) {
       const lineIndex = doc.lines.findIndex(l => l.id === lineId)
       if (lineIndex !== -1) {
-        Vue.set(doc.lines, lineIndex, { ...doc.lines[lineIndex], ...updatedLine })
+        doc.lines.splice(lineIndex, 1, { ...doc.lines[lineIndex], ...updatedLine })
       }
     }
   },
@@ -163,12 +160,12 @@ const mutations = {
   REMOVE_LINE(state, { docId, lineId }) {
     const doc = state.documents.find(d => d.id === docId)
     if (doc) {
-      Vue.set(doc, 'lines', doc.lines.filter(l => l.id !== lineId))
+      doc.lines = doc.lines.filter(l => l.id !== lineId)
     }
   },
 
   SET_FILTER(state, { key, value }) {
-    Vue.set(state.filters, key, value)
+    state.filters[key] = value
   },
 
   SET_SEARCH(state, query) {

@@ -87,11 +87,11 @@
                   </div>
                   <div class="detail-field">
                     <span class="field-label">Start Date</span>
-                    <span class="field-value">{{ campaign.startDate | date }}</span>
+                    <span class="field-value">{{ $filters.date(campaign.startDate) }}</span>
                   </div>
                   <div class="detail-field">
                     <span class="field-label">End Date</span>
-                    <span class="field-value">{{ campaign.endDate | date }}</span>
+                    <span class="field-value">{{ $filters.date(campaign.endDate) }}</span>
                   </div>
                   <div class="detail-field">
                     <span class="field-label">Salesperson</span>
@@ -129,16 +129,16 @@
                 <div class="section-body">
                   <div class="detail-field">
                     <span class="field-label">Budget</span>
-                    <span class="field-value font-semibold">{{ campaign.budget | currency }}</span>
+                    <span class="field-value font-semibold">{{ $filters.currency(campaign.budget) }}</span>
                   </div>
                   <div class="detail-field">
                     <span class="field-label">Actual Cost</span>
-                    <span class="field-value font-semibold">{{ campaign.actualCost | currency }}</span>
+                    <span class="field-value font-semibold">{{ $filters.currency(campaign.actualCost) }}</span>
                   </div>
                   <div class="detail-field">
                     <span class="field-label">Remaining</span>
                     <span class="field-value" :class="remainingBudget < 0 ? 'text-red-600 font-semibold' : 'text-green-700 font-semibold'">
-                      {{ remainingBudget | currency }}
+                      {{ $filters.currency(remainingBudget) }}
                     </span>
                   </div>
                   <!-- Budget progress bar -->
@@ -171,7 +171,7 @@
                   </div>
                   <div class="detail-field">
                     <span class="field-label">Cost per Response</span>
-                    <span class="field-value font-semibold">{{ costPerResponse | currency }}</span>
+                    <span class="field-value font-semibold">{{ $filters.currency(costPerResponse) }}</span>
                   </div>
                   <div class="detail-field">
                     <span class="field-label">Linked Opportunities</span>
@@ -190,11 +190,11 @@
                 <div class="section-body">
                   <div class="detail-field">
                     <span class="field-label">Created</span>
-                    <span class="field-value">{{ campaign.createdAt | date }}</span>
+                    <span class="field-value">{{ $filters.date(campaign.createdAt) }}</span>
                   </div>
                   <div class="detail-field">
                     <span class="field-label">Last Modified</span>
-                    <span class="field-value">{{ campaign.updatedAt | date }}</span>
+                    <span class="field-value">{{ $filters.date(campaign.updatedAt) }}</span>
                   </div>
                 </div>
               </div>
@@ -224,7 +224,7 @@
                   <span class="timeline-status" :class="activityStatusClass(activity.status)">{{ activity.status }}</span>
                 </div>
                 <p class="timeline-description">{{ activity.description }}</p>
-                <span class="timeline-date">{{ activity.date | date }}</span>
+                <span class="timeline-date">{{ $filters.date(activity.date) }}</span>
               </div>
             </div>
           </div>
@@ -253,7 +253,7 @@
                     <strong>Stage:</strong> {{ opp.currentStage }}
                   </span>
                   <span class="opp-meta-item">
-                    <strong>Value:</strong> {{ opp.estimatedValue | currency }}
+                    <strong>Value:</strong> {{ $filters.currency(opp.estimatedValue) }}
                   </span>
                   <span class="opp-meta-item">
                     <strong>Probability:</strong> {{ opp.probability }}%
@@ -320,6 +320,7 @@ import CommandBar from '@/components/layout/CommandBar.vue'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'CampaignDetail',
@@ -429,12 +430,12 @@ export default {
     }
   },
   created: function () {
-    this.$root.$on('shortcut-refresh', this.refreshData)
-    this.$root.$on('shortcut-save', this.handleSave)
+    eventBus.on('shortcut-refresh', this.refreshData)
+    eventBus.on('shortcut-save', this.handleSave)
   },
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-refresh', this.refreshData)
-    this.$root.$off('shortcut-save', this.handleSave)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-refresh', this.refreshData)
+    eventBus.off('shortcut-save', this.handleSave)
   },
   methods: {
     ...mapActions('campaigns', ['deleteCampaign']),

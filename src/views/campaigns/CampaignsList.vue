@@ -102,16 +102,16 @@
           <StatusBadge :status="row.type" />
         </template>
         <template #cell-startDate="{ row }">
-          {{ row.startDate | date }}
+          {{ $filters.date(row.startDate) }}
         </template>
         <template #cell-endDate="{ row }">
-          {{ row.endDate | date }}
+          {{ $filters.date(row.endDate) }}
         </template>
         <template #cell-budget="{ row }">
-          {{ row.budget | currency }}
+          {{ $filters.currency(row.budget) }}
         </template>
         <template #cell-actualCost="{ row }">
-          {{ row.actualCost | currency }}
+          {{ $filters.currency(row.actualCost) }}
         </template>
         <template #cell-successRate="{ row }">
           {{ row.successRate }}%
@@ -139,6 +139,7 @@ import DataGrid from '@/components/common/DataGrid.vue'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'CampaignsList',
@@ -212,12 +213,12 @@ export default {
     }
   },
   created: function () {
-    this.$root.$on('shortcut-toggle-filter', this.toggleFilters)
-    this.$root.$on('shortcut-refresh', this.handleRefresh)
+    eventBus.on('shortcut-toggle-filter', this.toggleFilters)
+    eventBus.on('shortcut-refresh', this.handleRefresh)
   },
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-toggle-filter', this.toggleFilters)
-    this.$root.$off('shortcut-refresh', this.handleRefresh)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-toggle-filter', this.toggleFilters)
+    eventBus.off('shortcut-refresh', this.handleRefresh)
   },
   methods: {
     ...mapActions('campaigns', ['setFilter', 'setSearch', 'setSort', 'setPage', 'setPerPage', 'deleteCampaign']),
@@ -446,7 +447,7 @@ export default {
   max-height: 500px;
   overflow: hidden;
 }
-.slide-enter,
+.slide-enter-from,
 .slide-leave-to {
   max-height: 0;
   padding-top: 0;

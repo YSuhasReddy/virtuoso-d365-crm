@@ -204,6 +204,7 @@ import { mapGetters, mapActions } from 'vuex'
 import CommandBar from '@/components/layout/CommandBar.vue'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
 import salespersons from '@/data/salespersons'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'CampaignForm',
@@ -296,7 +297,7 @@ export default {
     if (this.isEditMode && this.existingCampaign) {
       this.loadExistingCampaign()
     }
-    this.$root.$on('shortcut-save', this.handleSave)
+    eventBus.on('shortcut-save', this.handleSave)
     var self = this
     this._escHandler = function (e) {
       if (e.key === 'Escape') {
@@ -305,8 +306,8 @@ export default {
     }
     document.addEventListener('keydown', this._escHandler)
   },
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-save', this.handleSave)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-save', this.handleSave)
     if (this._escHandler) {
       document.removeEventListener('keydown', this._escHandler)
     }

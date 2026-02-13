@@ -66,7 +66,7 @@
                 @dblclick.stop.prevent="autoFitColumn(col)"
               ></div>
             </th>
-            <th v-if="$scopedSlots.actions" class="col-actions grid-header">Actions</th>
+            <th v-if="$slots.actions" class="col-actions grid-header">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -145,14 +145,14 @@
                 <!-- Display Mode -->
                 <template v-else>
                   <slot :name="'cell-' + col.field" :row="item" :value="getCellValue(item, col)">
-                    <span v-if="col.format === 'currency'">{{ getCellValue(item, col) | currency }}</span>
-                    <span v-else-if="col.format === 'date'">{{ getCellValue(item, col) | date }}</span>
+                    <span v-if="col.format === 'currency'">{{ $filters.currency(getCellValue(item, col)) }}</span>
+                    <span v-else-if="col.format === 'date'">{{ $filters.date(getCellValue(item, col)) }}</span>
                     <StatusBadge v-else-if="col.format === 'badge'" :status="getCellValue(item, col) || ''" />
                     <span v-else>{{ getCellValue(item, col) }}</span>
                   </slot>
                 </template>
               </td>
-              <td v-if="$scopedSlots.actions" class="col-actions" @click.stop>
+              <td v-if="$slots.actions" class="col-actions" @click.stop>
                 <slot name="actions" :row="item"></slot>
               </td>
             </template>
@@ -376,7 +376,7 @@ export default {
     groupHeaderColspan: function () {
       var count = this.visibleColumns.length
       if (this.selectable) count += 1
-      if (this.$scopedSlots.actions) count += 1
+      if (this.$slots.actions) count += 1
       return count
     },
 
@@ -707,11 +707,11 @@ export default {
 
       if (this.hiddenColumns[field]) {
         // Show the column
-        this.$set(this.hiddenColumns, field, false)
+        this.hiddenColumns[field] = false
       } else {
         // Hide the column, but only if more than 1 visible
         if (visibleCount > 1) {
-          this.$set(this.hiddenColumns, field, true)
+          this.hiddenColumns[field] = true
         }
       }
       // Feature 2: Persist preferences after column visibility change
@@ -834,7 +834,7 @@ export default {
       var onMouseMove = function (e) {
         var diff = e.clientX - self.resizeStartX
         var newWidth = Math.max(60, self.resizeStartWidth + diff)
-        self.$set(self.columnWidths, self.resizeCol.field, newWidth)
+        self.columnWidths[self.resizeCol.field] = newWidth
       }
       var onMouseUp = function () {
         self.resizing = false
@@ -903,7 +903,7 @@ export default {
         if (hw > maxWidth) maxWidth = hw
       }
 
-      this.$set(this.columnWidths, col.field, Math.min(maxWidth, 500))
+      this.columnWidths[col.field] = Math.min(maxWidth, 500)
       this.closeColumnMenu()
       // Feature 2: Save after auto-fit
       this.debouncedSavePreferences()
@@ -930,7 +930,7 @@ export default {
 
     toggleGroup: function (groupKey) {
       var value = groupKey.replace('group-', '')
-      this.$set(this.collapsedGroups, value, !this.collapsedGroups[value])
+      this.collapsedGroups[value] = !this.collapsedGroups[value]
     },
 
     isGroupCollapsed: function (groupKey) {
@@ -1055,7 +1055,7 @@ export default {
     this.loadPreferences()
   },
 
-  beforeDestroy: function () {
+  beforeUnmount: function () {
     if (this._handleKeydown) {
       document.removeEventListener('keydown', this._handleKeydown)
     }
@@ -1461,7 +1461,7 @@ export default {
 .ctx-menu-anim-leave-active {
   transition: opacity 0.12s ease, transform 0.12s ease;
 }
-.ctx-menu-anim-enter,
+.ctx-menu-anim-enter-from,
 .ctx-menu-anim-leave-to {
   opacity: 0;
   transform: translateY(-4px);

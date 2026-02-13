@@ -21,7 +21,7 @@
     <div class="pipeline-summary">
       <div class="summary-card d365-card">
         <span class="summary-label">Total Pipeline Value</span>
-        <span class="summary-value">{{ totalPipelineValue | currency }}</span>
+        <span class="summary-value">{{ $filters.currency(totalPipelineValue) }}</span>
       </div>
       <div class="summary-card d365-card">
         <span class="summary-label">Open Opportunities</span>
@@ -33,11 +33,11 @@
       </div>
       <div class="summary-card d365-card">
         <span class="summary-label">Weighted Value</span>
-        <span class="summary-value summary-weighted">{{ weightedValue | currency }}</span>
+        <span class="summary-value summary-weighted">{{ $filters.currency(weightedValue) }}</span>
       </div>
       <div class="summary-card d365-card summary-card-weighted">
         <span class="summary-label">Weighted Pipeline</span>
-        <span class="summary-value summary-weighted-pipeline">{{ weightedPipelineValue | currency }}</span>
+        <span class="summary-value summary-weighted-pipeline">{{ $filters.currency(weightedPipelineValue) }}</span>
         <span class="summary-detail">Sum of (Value x Probability)</span>
       </div>
     </div>
@@ -54,7 +54,7 @@
             <span class="column-title">{{ stage.name }}</span>
             <span class="column-count">{{ getStageOpportunities(stage.name).length }}</span>
           </div>
-          <div class="column-value">{{ getStageTotal(stage.name) | currency }}</div>
+          <div class="column-value">{{ $filters.currency(getStageTotal(stage.name)) }}</div>
         </div>
         <div class="column-body">
           <div
@@ -66,7 +66,7 @@
             <div class="card-name">{{ opp.name }}</div>
             <div class="card-contact">{{ opp.contactName }}</div>
             <div class="card-details">
-              <span class="card-value">{{ opp.estimatedValue | currency }}</span>
+              <span class="card-value">{{ $filters.currency(opp.estimatedValue) }}</span>
               <StatusBadge :status="opp.priority" />
             </div>
             <div class="card-footer">
@@ -74,7 +74,7 @@
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="#A19F9D">
                   <path d="M3 1v1H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H9V1H8v1H4V1H3zm-1 3h8v6H2V4z"/>
                 </svg>
-                {{ opp.estimatedCloseDate | shortDate }}
+                {{ $filters.shortDate(opp.estimatedCloseDate) }}
               </span>
               <span class="card-probability">{{ opp.probability }}%</span>
             </div>
@@ -92,7 +92,7 @@
             <span class="column-title">Closed Won</span>
             <span class="column-count">{{ wonOpportunities.length }}</span>
           </div>
-          <div class="column-value column-value-won">{{ wonTotal | currency }}</div>
+          <div class="column-value column-value-won">{{ $filters.currency(wonTotal) }}</div>
         </div>
         <div class="column-body">
           <div
@@ -104,7 +104,7 @@
             <div class="card-name">{{ opp.name }}</div>
             <div class="card-contact">{{ opp.contactName }}</div>
             <div class="card-details">
-              <span class="card-value">{{ opp.estimatedValue | currency }}</span>
+              <span class="card-value">{{ $filters.currency(opp.estimatedValue) }}</span>
               <StatusBadge status="Won" />
             </div>
             <div class="card-footer">
@@ -112,7 +112,7 @@
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="#A19F9D">
                   <path d="M3 1v1H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H9V1H8v1H4V1H3zm-1 3h8v6H2V4z"/>
                 </svg>
-                {{ opp.estimatedCloseDate | shortDate }}
+                {{ $filters.shortDate(opp.estimatedCloseDate) }}
               </span>
               <span class="card-probability card-probability-won">100%</span>
             </div>
@@ -135,7 +135,7 @@
           <path d="M4 2l4 4-4 4"/>
         </svg>
         <span>Closed Lost ({{ lostOpportunities.length }})</span>
-        <span class="lost-value">{{ lostTotal | currency }}</span>
+        <span class="lost-value">{{ $filters.currency(lostTotal) }}</span>
       </button>
       <transition name="slide">
         <div v-if="showLost" class="lost-cards">
@@ -150,7 +150,7 @@
               <span class="card-contact">{{ opp.contactName }}</span>
             </div>
             <div class="lost-card-meta">
-              <span class="card-value">{{ opp.estimatedValue | currency }}</span>
+              <span class="card-value">{{ $filters.currency(opp.estimatedValue) }}</span>
               <StatusBadge status="Lost" />
             </div>
           </div>
@@ -166,27 +166,27 @@
       <div class="footer-row">
         <div class="footer-item">
           <span class="footer-label">Qualification</span>
-          <span class="footer-value">{{ getStageTotal('Qualification') | currency }}</span>
+          <span class="footer-value">{{ $filters.currency(getStageTotal('Qualification')) }}</span>
         </div>
         <div class="footer-item">
           <span class="footer-label">Development</span>
-          <span class="footer-value">{{ getStageTotal('Development') | currency }}</span>
+          <span class="footer-value">{{ $filters.currency(getStageTotal('Development')) }}</span>
         </div>
         <div class="footer-item">
           <span class="footer-label">Proposal</span>
-          <span class="footer-value">{{ getStageTotal('Proposal') | currency }}</span>
+          <span class="footer-value">{{ $filters.currency(getStageTotal('Proposal')) }}</span>
         </div>
         <div class="footer-item">
           <span class="footer-label">Negotiation</span>
-          <span class="footer-value">{{ getStageTotal('Negotiation') | currency }}</span>
+          <span class="footer-value">{{ $filters.currency(getStageTotal('Negotiation')) }}</span>
         </div>
         <div class="footer-item footer-item-won">
           <span class="footer-label">Won</span>
-          <span class="footer-value">{{ wonTotal | currency }}</span>
+          <span class="footer-value">{{ $filters.currency(wonTotal) }}</span>
         </div>
         <div class="footer-item footer-item-total">
           <span class="footer-label">Total Pipeline</span>
-          <span class="footer-value">{{ grandTotal | currency }}</span>
+          <span class="footer-value">{{ $filters.currency(grandTotal) }}</span>
         </div>
       </div>
     </div>
@@ -198,6 +198,7 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
 import CommandBar from '@/components/layout/CommandBar.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'PipelineView',
@@ -303,11 +304,11 @@ export default {
     this._shortcutRefresh = function () {
       self.handleRefresh()
     }
-    this.$root.$on('shortcut-refresh', this._shortcutRefresh)
+    eventBus.on('shortcut-refresh', this._shortcutRefresh)
   },
 
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-refresh', this._shortcutRefresh)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-refresh', this._shortcutRefresh)
   },
 
   methods: {
@@ -748,7 +749,7 @@ export default {
   transition: all 0.2s ease;
   overflow: hidden;
 }
-.slide-enter, .slide-leave-to {
+.slide-enter-from, .slide-leave-to {
   opacity: 0;
   max-height: 0;
 }

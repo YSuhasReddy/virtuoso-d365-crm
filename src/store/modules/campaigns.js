@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import defaultCampaigns from '../../data/campaigns'
 
 const STORAGE_KEY = 'd365-campaigns'
@@ -133,16 +132,14 @@ const mutations = {
   },
 
   ADD_CAMPAIGN: function (state, campaign) {
-    var newAll = state.all.slice()
-    newAll.push(campaign)
-    Vue.set(state, 'all', newAll)
+    state.all.push(campaign)
   },
 
   UPDATE_CAMPAIGN: function (state, updatedCampaign) {
     var index = state.all.findIndex(function (c) { return c.id === updatedCampaign.id })
     if (index !== -1) {
       var merged = Object.assign({}, state.all[index], updatedCampaign, { updatedAt: new Date().toISOString() })
-      Vue.set(state.all, index, merged)
+      state.all.splice(index, 1, merged)
     }
   },
 
@@ -158,7 +155,7 @@ const mutations = {
       activities.push(activity)
       campaign.activities = activities
       campaign.updatedAt = new Date().toISOString()
-      Vue.set(state.all, index, campaign)
+      state.all.splice(index, 1, campaign)
     }
   },
 
@@ -166,12 +163,12 @@ const mutations = {
     var index = state.all.findIndex(function (c) { return c.id === campaignId })
     if (index !== -1) {
       var updated = Object.assign({}, state.all[index], { status: status, updatedAt: new Date().toISOString() })
-      Vue.set(state.all, index, updated)
+      state.all.splice(index, 1, updated)
     }
   },
 
   SET_FILTER: function (state, { key, value }) {
-    Vue.set(state.filters, key, value)
+    state.filters[key] = value
   },
 
   SET_SEARCH: function (state, query) {

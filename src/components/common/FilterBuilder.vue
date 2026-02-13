@@ -260,18 +260,18 @@ export default {
       var condition = this.conditions[index]
       if (!condition) return
 
-      this.$set(condition, key, val)
+      condition[key] = val
 
       // Reset operator and value when field changes
       if (key === 'field') {
-        this.$set(condition, 'operator', '')
-        this.$set(condition, 'value', '')
+        condition['operator'] = ''
+        condition['value'] = ''
       }
 
       // Reset value when operator changes to a no-value or relative-date operator
       if (key === 'operator') {
         if (this.isNoValueOperator(val) || this.isRelativeDateOperator(val)) {
-          this.$set(condition, 'value', '')
+          condition['value'] = ''
         }
       }
 
@@ -280,7 +280,7 @@ export default {
 
     setConjunction: function (index, val) {
       if (this.conditions[index]) {
-        this.$set(this.conditions[index], 'conjunction', val)
+        this.conditions[index]['conjunction'] = val
         this.emitChange()
       }
     },

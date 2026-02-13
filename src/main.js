@@ -1,40 +1,27 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import './assets/styles/tailwind.css'
 import './assets/styles/d365.css'
 
-// Import and register the smart position directive
+// Import the smart position directive
 import SmartPosition from './directives/smartPosition'
-Vue.use(SmartPosition)
 
-// Import and register the keyboard shortcuts mixin globally
+// Import the keyboard shortcuts mixin
 import keyboardShortcuts from './mixins/keyboardShortcuts'
-Vue.mixin(keyboardShortcuts)
 
-Vue.config.productionTip = false
+// Import global filter functions
+import filters from './utils/filters'
 
-// Global filters
-Vue.filter('currency', (value) => {
-  if (value === null || value === undefined) return '$0.00'
-  return `$${parseFloat(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-})
+const app = createApp(App)
 
-Vue.filter('date', (value) => {
-  if (!value) return ''
-  const d = new Date(value)
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-})
+app.use(router)
+app.use(store)
+app.use(SmartPosition)
+app.mixin(keyboardShortcuts)
 
-Vue.filter('shortDate', (value) => {
-  if (!value) return ''
-  const d = new Date(value)
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-})
+// Register filters as global properties (replaces Vue.filter())
+app.config.globalProperties.$filters = filters
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+app.mount('#app')

@@ -139,6 +139,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import CommandBar from '@/components/layout/CommandBar.vue'
 import Breadcrumb from '@/components/common/Breadcrumb.vue'
+import eventBus from '../../utils/eventBus'
 
 export default {
   name: 'SalespersonForm',
@@ -213,12 +214,12 @@ export default {
     if (this.isEditMode && this.existingSalesperson) {
       this.loadExistingSalesperson()
     }
-    this.$root.$on('shortcut-save', this.handleSave)
+    eventBus.on('shortcut-save', this.handleSave)
     this._escHandler = this.handleEscape.bind(this)
     document.addEventListener('keydown', this._escHandler)
   },
-  beforeDestroy: function () {
-    this.$root.$off('shortcut-save', this.handleSave)
+  beforeUnmount: function () {
+    eventBus.off('shortcut-save', this.handleSave)
     if (this._escHandler) {
       document.removeEventListener('keydown', this._escHandler)
     }

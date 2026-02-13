@@ -44,7 +44,7 @@
         @mouseleave="handleMenuHover(false)"
       >
         <!-- Header Slot -->
-        <div v-if="$scopedSlots.header || $slots.header" class="smart-dropdown__header">
+        <div v-if="$slots.header" class="smart-dropdown__header">
           <slot name="header"></slot>
         </div>
 
@@ -109,7 +109,7 @@
         </div>
 
         <!-- Footer Slot -->
-        <div v-if="$scopedSlots.footer || $slots.footer" class="smart-dropdown__footer">
+        <div v-if="$slots.footer" class="smart-dropdown__footer">
           <slot name="footer"></slot>
         </div>
       </div>
@@ -443,7 +443,7 @@ export default {
     }
   },
 
-  beforeDestroy: function () {
+  beforeUnmount: function () {
     this.removeGlobalListeners()
     if (this.hoverTimer) clearTimeout(this.hoverTimer)
   }
@@ -633,16 +633,16 @@ export default {
 .smart-dropdown-anim-leave-active {
   transition: opacity 0.15s ease, transform 0.15s ease;
 }
-.smart-dropdown-anim-enter,
+.smart-dropdown-anim-enter-from,
 .smart-dropdown-anim-leave-to {
   opacity: 0;
 }
 
-.smart-dropdown__menu--below.smart-dropdown-anim-enter,
+.smart-dropdown__menu--below.smart-dropdown-anim-enter-from,
 .smart-dropdown__menu--below.smart-dropdown-anim-leave-to {
   transform: translateY(-4px);
 }
-.smart-dropdown__menu--above.smart-dropdown-anim-enter,
+.smart-dropdown__menu--above.smart-dropdown-anim-enter-from,
 .smart-dropdown__menu--above.smart-dropdown-anim-leave-to {
   transform: translateY(4px);
 }

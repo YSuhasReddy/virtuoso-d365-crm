@@ -2,9 +2,8 @@
   <div class="command-bar" ref="commandBar">
     <div class="command-bar-left" ref="actionsContainer">
       <!-- Primary/Left actions -->
-      <template v-for="action in visibleLeftActions">
+      <template v-for="action in visibleLeftActions" :key="'la-' + action.id">
         <button
-          :key="'la-' + action.id"
           class="d365-cmd-btn"
           :class="{ primary: action.primary }"
           :disabled="action.disabled"
@@ -19,9 +18,8 @@
       <span v-if="visibleLeftActions.length > 0 && (visibleExtraActions.length > 0 || visibleMenus.length > 0)" class="cmd-separator"></span>
 
       <!-- Extra actions -->
-      <template v-for="action in visibleExtraActions">
+      <template v-for="action in visibleExtraActions" :key="'ea-' + action.id">
         <button
-          :key="'ea-' + action.id"
           class="d365-cmd-btn"
           :disabled="action.disabled"
           @click="$emit(action.event, action.payload)"
@@ -35,8 +33,8 @@
       <span v-if="visibleExtraActions.length > 0 && visibleMenus.length > 0" class="cmd-separator"></span>
 
       <!-- Menu buttons -->
-      <template v-for="menu in visibleMenus">
-        <div :key="'menu-' + menu.id" class="cmd-menu-wrap" :ref="'menuTrigger-' + menu.id">
+      <template v-for="menu in visibleMenus" :key="'menu-' + menu.id">
+        <div class="cmd-menu-wrap" :ref="'menuTrigger-' + menu.id">
           <button
             class="d365-cmd-btn cmd-menu-btn"
             @click="toggleMenu(menu.id)"
@@ -54,10 +52,9 @@
             :class="menuPositionClass(menu.id)"
             :ref="'menuDropdown-' + menu.id"
           >
-            <template v-for="(item, itemIdx) in menu.items">
-              <div v-if="item.separator" :key="'sep-' + menu.id + '-' + itemIdx" class="cmd-menu-separator"></div>
+            <template v-for="(item, itemIdx) in menu.items" :key="'item-' + menu.id + '-' + itemIdx">
+              <div v-if="item.separator" class="cmd-menu-separator"></div>
               <button
-                :key="'item-' + menu.id + '-' + item.id"
                 class="cmd-menu-item"
                 :class="{ 'cmd-menu-item--disabled': item.disabled }"
                 :disabled="item.disabled"
@@ -91,9 +88,8 @@
           :class="overflowMenuPositionClass"
           ref="overflowDropdown"
         >
-          <template v-for="action in overflowActions">
+          <template v-for="action in overflowActions" :key="'of-' + action.id">
             <button
-              :key="'of-' + action.id"
               class="cmd-menu-item"
               :class="{ 'cmd-menu-item--disabled': action.disabled }"
               :disabled="action.disabled"
@@ -287,7 +283,7 @@ export default {
     })
   },
 
-  beforeDestroy: function() {
+  beforeUnmount: function() {
     document.removeEventListener('mousedown', this._clickOutside)
     if (this._resizeObserver) {
       this._resizeObserver.disconnect()
