@@ -420,5 +420,43 @@ export default [
     activities: [],
     createdAt: '2025-12-05T08:00:00Z',
     updatedAt: '2025-12-14T09:00:00Z'
+  },
+  {
+    id: 'OPP-10022',
+    name: 'Adatum - QA Automation Platform',
+    contactId: 'CT-10035',
+    contactName: 'Suhas Reddy YS',
+    salesperson: 'SP-001',
+    salesCycle: 'Standard Sales',
+    currentStage: 'Proposal',
+    stageIndex: 3,
+    estimatedValue: 210000,
+    estimatedCloseDate: '2026-05-30',
+    probability: 60,
+    status: 'Open',
+    priority: 'High',
+    description: 'Enterprise QA automation platform deployment including Virtuoso test automation, CI/CD integration, and AI-powered test generation for Adatum\'s engineering teams.',
+    activities: [],
+    createdAt: '2025-11-15T09:00:00Z',
+    updatedAt: '2026-02-10T14:00:00Z'
+  },
+  {
+    id: 'OPP-10023',
+    name: 'Adatum - Test Environment Management',
+    contactId: 'CT-10035',
+    contactName: 'Suhas Reddy YS',
+    salesperson: 'SP-001',
+    salesCycle: 'Standard Sales',
+    currentStage: 'Qualification',
+    stageIndex: 1,
+    estimatedValue: 75000,
+    estimatedCloseDate: '2026-08-15',
+    probability: 25,
+    status: 'Open',
+    priority: 'Medium',
+    description: 'Cloud-based test environment provisioning and management solution for Adatum\'s QA infrastructure.',
+    activities: [],
+    createdAt: '2026-01-20T10:00:00Z',
+    updatedAt: '2026-02-08T11:00:00Z'
   }
 ]

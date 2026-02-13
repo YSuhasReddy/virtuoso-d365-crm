@@ -366,6 +366,78 @@ export default [
     updatedAt: '2025-12-14T10:00:00Z'
   },
 
+  // ─── SUHAS REDDY YS DOCUMENTS ──────────────────────────
+  {
+    id: 'SQ-10006',
+    type: 'Quote',
+    number: 'SQ-10006',
+    contactId: 'CT-10035',
+    contactName: 'Suhas Reddy YS',
+    opportunityId: 'OPP-10022',
+    status: 'Sent',
+    lines: [
+      { id: 'SQ-10006-01', description: 'Software License - QA Automation Platform (20 seats)', quantity: 20, unitPrice: 3500, discount: 10, amount: 63000 },
+      { id: 'SQ-10006-02', description: 'Selenium Grid Enterprise License', quantity: 1, unitPrice: 45000, discount: 0, amount: 45000 },
+      { id: 'SQ-10006-03', description: 'CI/CD Pipeline Integration Module', quantity: 1, unitPrice: 32000, discount: 0, amount: 32000 },
+      { id: 'SQ-10006-04', description: 'Implementation & Configuration Services', quantity: 120, unitPrice: 275, discount: 0, amount: 33000 },
+      { id: 'SQ-10006-05', description: 'Training Program - QA Team (20 users)', quantity: 20, unitPrice: 750, discount: 0, amount: 15000 }
+    ],
+    subtotal: 188000,
+    discountPercent: 0,
+    taxPercent: 18,
+    total: 221840,
+    validUntil: '2026-04-30',
+    notes: 'QA Automation Platform proposal for Adatum Corporation. Volume discount on seat licenses. Includes full CI/CD integration.',
+    createdAt: '2026-01-20T09:00:00Z',
+    updatedAt: '2026-02-05T14:00:00Z'
+  },
+  {
+    id: 'SO-10005',
+    type: 'Order',
+    number: 'SO-10005',
+    contactId: 'CT-10035',
+    contactName: 'Suhas Reddy YS',
+    opportunityId: 'OPP-10022',
+    status: 'Processing',
+    lines: [
+      { id: 'SO-10005-01', description: 'Software License - QA Automation Platform (20 seats)', quantity: 20, unitPrice: 3500, discount: 10, amount: 63000 },
+      { id: 'SO-10005-02', description: 'Selenium Grid Enterprise License', quantity: 1, unitPrice: 45000, discount: 0, amount: 45000 },
+      { id: 'SO-10005-03', description: 'CI/CD Pipeline Integration Module', quantity: 1, unitPrice: 32000, discount: 0, amount: 32000 },
+      { id: 'SO-10005-04', description: 'Implementation & Configuration Services', quantity: 120, unitPrice: 275, discount: 0, amount: 33000 },
+      { id: 'SO-10005-05', description: 'Training Program - QA Team (20 users)', quantity: 20, unitPrice: 750, discount: 0, amount: 15000 }
+    ],
+    subtotal: 188000,
+    discountPercent: 0,
+    taxPercent: 18,
+    total: 221840,
+    validUntil: null,
+    notes: 'Order confirmed following proposal acceptance. Selenium Grid provisioning in progress. Training scheduled for March.',
+    createdAt: '2026-02-10T09:00:00Z',
+    updatedAt: '2026-02-12T16:00:00Z'
+  },
+  {
+    id: 'SI-10005',
+    type: 'Invoice',
+    number: 'SI-10005',
+    contactId: 'CT-10035',
+    contactName: 'Suhas Reddy YS',
+    opportunityId: 'OPP-10022',
+    status: 'Unpaid',
+    lines: [
+      { id: 'SI-10005-01', description: 'Software License - QA Automation Platform (20 seats)', quantity: 20, unitPrice: 3500, discount: 10, amount: 63000 },
+      { id: 'SI-10005-02', description: 'Selenium Grid Enterprise License', quantity: 1, unitPrice: 45000, discount: 0, amount: 45000 },
+      { id: 'SI-10005-03', description: 'Implementation & Configuration Services (Phase 1)', quantity: 60, unitPrice: 275, discount: 0, amount: 16500 }
+    ],
+    subtotal: 124500,
+    discountPercent: 0,
+    taxPercent: 18,
+    total: 146910,
+    validUntil: null,
+    notes: 'Phase 1 invoice covering licenses and initial implementation. Payment due by 2026-03-12. Net 30 terms.',
+    createdAt: '2026-02-12T10:00:00Z',
+    updatedAt: '2026-02-12T10:00:00Z'
+  },
+
   // ─── CREDIT MEMOS ──────────────────────────────────────────
   {
     id: 'SCM-10000',

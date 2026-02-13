@@ -811,5 +811,28 @@ export default [
     notes: 'Technical decision maker at Fabrikam. Wants to see performance benchmarks.',
     createdAt: '2024-10-01T09:00:00Z',
     updatedAt: '2025-12-02T10:30:00Z'
+  },
+  {
+    id: 'CT-10035',
+    type: 'Person',
+    name: 'Suhas Reddy YS',
+    firstName: 'Suhas',
+    lastName: 'Reddy YS',
+    companyId: 'CT-10000',
+    email: 'suhas.r@spotqa.com',
+    phone: '+1-555-2200',
+    mobile: '+1-555-2201',
+    address: { line1: '1200 Tech Park Drive', city: 'San Francisco', state: 'CA', postalCode: '94105', country: 'USA' },
+    website: '',
+    industry: 'Technology',
+    businessRelation: 'Customer',
+    salesperson: 'SP-001',
+    jobTitle: 'QA Lead',
+    department: 'Quality Assurance',
+    organizationLevel: 'Manager',
+    mailingGroups: ['Newsletter', 'Product Updates'],
+    notes: 'Key contact at Adatum Corporation for QA automation and testing platform initiatives. Driving Virtuoso adoption across testing teams.',
+    createdAt: '2025-01-10T09:00:00Z',
+    updatedAt: '2026-02-10T14:30:00Z'
   }
 ]
