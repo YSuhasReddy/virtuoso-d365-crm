@@ -14,7 +14,7 @@ const AUTHENTICATED_USER = {
 
 function loadFromStorage() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY)
+    const saved = sessionStorage.getItem(STORAGE_KEY)
     if (saved) return JSON.parse(saved)
   } catch (e) {
     console.warn('Failed to load auth state:', e)
@@ -24,7 +24,7 @@ function loadFromStorage() {
 
 function persistAuth(data) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data))
   } catch (e) {
     console.warn('Failed to persist auth state:', e)
   }
@@ -70,7 +70,7 @@ const actions = {
 
   logout({ commit }) {
     commit('CLEAR_AUTH')
-    localStorage.removeItem(STORAGE_KEY)
+    sessionStorage.removeItem(STORAGE_KEY)
   },
 
   initAuth({ commit }) {
