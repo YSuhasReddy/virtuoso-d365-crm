@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  publicPath: '/',
+  publicPath: process.env.CI ? '/virtuoso-d365-crm/' : '/',
   outputDir: 'dist',
   assetsDir: 'assets',
   productionSourceMap: false,
