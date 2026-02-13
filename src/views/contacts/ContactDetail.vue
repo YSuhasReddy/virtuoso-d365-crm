@@ -276,6 +276,43 @@
               </div>
             </div>
 
+            <!-- Campaigns Tab -->
+            <div v-if="activeTab === 'campaigns'" class="campaigns-tab">
+              <div v-if="contactCampaigns.length === 0" class="empty-tab-state">
+                <p class="empty-title">No campaigns</p>
+                <p class="empty-subtitle">This contact is not part of any campaigns.</p>
+              </div>
+              <div v-else class="campaign-list">
+                <div
+                  v-for="camp in contactCampaigns"
+                  :key="camp.id"
+                  class="campaign-card d365-card"
+                  @click="$router.push('/campaigns/' + camp.id)"
+                >
+                  <div class="campaign-card-header">
+                    <span class="campaign-card-name">{{ camp.name }}</span>
+                    <StatusBadge :status="camp.status" />
+                  </div>
+                  <div class="campaign-card-body">
+                    <div class="campaign-meta">
+                      <span class="campaign-meta-item">
+                        <strong>Type:</strong> {{ camp.type }}
+                      </span>
+                      <span class="campaign-meta-item">
+                        <strong>Start:</strong> {{ camp.startDate | date }}
+                      </span>
+                      <span class="campaign-meta-item">
+                        <strong>End:</strong> {{ camp.endDate | date }}
+                      </span>
+                      <span class="campaign-meta-item">
+                        <strong>Budget:</strong> {{ camp.budget | currency }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -337,6 +374,7 @@ export default {
     ...mapGetters('opportunities', { allOpportunities: 'allOpportunities' }),
     ...mapGetters('activities', { allActivitiesList: 'allActivities' }),
     ...mapGetters('sales', { allDocuments: 'allDocuments' }),
+    ...mapGetters('campaigns', { allCampaigns: 'allCampaigns' }),
 
     contact() {
       return this.getContactById(this.$route.params.id)
@@ -437,12 +475,18 @@ export default {
       return this.allDocuments.filter(d => d.contactId === this.contact.id)
     },
 
+    contactCampaigns() {
+      if (!this.contact) return []
+      return this.allCampaigns.filter(c => (c.targetContacts || []).includes(this.contact.id))
+    },
+
     tabs() {
       return [
         { id: 'general', label: 'General' },
         { id: 'opportunities', label: 'Opportunities', count: this.contactOpportunities.length },
         { id: 'activities', label: 'Activities', count: this.contactActivities.length },
-        { id: 'documents', label: 'Documents', count: this.contactDocuments.length }
+        { id: 'documents', label: 'Documents', count: this.contactDocuments.length },
+        { id: 'campaigns', label: 'Campaigns', count: this.contactCampaigns.length }
       ]
     },
 
@@ -452,7 +496,7 @@ export default {
         {
           id: 'related',
           title: 'Related',
-          badge: this.contactOpportunities.length + this.contactActivities.length + this.contactDocuments.length,
+          badge: this.contactOpportunities.length + this.contactActivities.length + this.contactDocuments.length + this.contactCampaigns.length,
           items: [
             {
               label: 'Opportunities',
@@ -474,6 +518,13 @@ export default {
               type: 'link',
               link: null,
               _tab: 'documents'
+            },
+            {
+              label: 'Campaigns',
+              value: this.contactCampaigns.length,
+              type: 'link',
+              link: null,
+              _tab: 'campaigns'
             }
           ]
         },
@@ -879,6 +930,47 @@ export default {
   font-size: 12px;
   color: #A19F9D;
   line-height: 1.4;
+}
+
+/* Campaign Cards */
+.campaign-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campaign-card {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+.campaign-card:hover {
+  box-shadow: 0 3.2px 7.2px rgba(0,0,0,0.13);
+}
+
+.campaign-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.campaign-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0078D4;
+}
+
+.campaign-card-body .campaign-meta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: #605E5C;
+}
+
+.campaign-meta-item strong {
+  color: #323130;
 }
 
 /* Responsive */
